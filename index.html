@@ -1,0 +1,331 @@
+<title>SB UK&amp;I Retention Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap">
+<style>
+/* Layout: CRM reporting dashboard. Dark top nav, dashboard header with actions, filter bar, then a 12-column grid of report cards. */
+:root{
+  --canvas:#F5F8FA; --card:#FFFFFF; --border:#CBD6E2; --border-soft:#DFE3EB; --head:#EAF0F6;
+  --ink:#33475B; --ink-strong:#213343; --muted:#516F90; --faint:#7C98B6;
+  --nav:#213343; --nav-ink:#EAF0F6; --link:#0091AE;
+  --orange:#FF7A59; --orange-dark:#E8582E; --teal:#00BDA5; --blue:#00A4BD; --slate:#516F90; --pink:#F2547D;
+  --up:#00A38D; --down:#D93A5A; --warn:#C17800;
+  --tag-good-bg:#E5F8F6; --tag-good:#007A6A; --tag-warn-bg:#FEF8F0; --tag-warn:#9A5B00; --tag-bad-bg:#FDEDEE; --tag-bad:#B42A45;
+  --c-full:#516F90; --c-ramp:#7FD1DE; --c-empty:#FF7A59; --c-none:#EAF0F6;
+  --font:'Lexend Deca', 'Avenir Next', 'Segoe UI', Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --canvas:#111B24; --card:#1A2834; --border:#2E4252; --border-soft:#26384A; --head:#21323F;
+  --ink:#C9D6E1; --ink-strong:#EEF3F7; --muted:#99AFC2; --faint:#7C98B6;
+  --nav:#0B141C; --nav-ink:#C9D6E1; --link:#3CC3DA;
+  --up:#3CCFB6; --down:#FF7A93; --warn:#F2B04C;
+  --tag-good-bg:#123129; --tag-good:#5FD9C2; --tag-warn-bg:#33270F; --tag-warn:#F2B04C; --tag-bad-bg:#3A1A22; --tag-bad:#FF8DA3;
+  --c-full:#99AFC2; --c-ramp:#3E8E9B; --c-none:#21323F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --canvas:#111B24; --card:#1A2834; --border:#2E4252; --border-soft:#26384A; --head:#21323F;
+  --ink:#C9D6E1; --ink-strong:#EEF3F7; --muted:#99AFC2; --faint:#7C98B6;
+  --nav:#0B141C; --nav-ink:#C9D6E1; --link:#3CC3DA;
+  --up:#3CCFB6; --down:#FF7A93; --warn:#F2B04C;
+  --tag-good-bg:#123129; --tag-good:#5FD9C2; --tag-warn-bg:#33270F; --tag-warn:#F2B04C; --tag-bad-bg:#3A1A22; --tag-bad:#FF8DA3;
+  --c-full:#99AFC2; --c-ramp:#3E8E9B; --c-none:#21323F; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--canvas);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.45;padding-inline:0;padding-block:0 40px}
+.topnav{background:var(--nav);color:var(--nav-ink);display:flex;align-items:center;gap:22px;padding:0 20px;height:52px;overflow-x:auto;white-space:nowrap}
+.topnav .mark{width:22px;height:22px;border-radius:6px;background:var(--orange);flex:none}
+.topnav span{font-size:14px;opacity:.85}
+.topnav span.on{opacity:1;font-weight:600;border-bottom:3px solid var(--orange);padding-block:15px 12px}
+.topnav .grow{flex:1}
+.page{padding-inline:24px;max-width:1440px;margin:0 auto}
+@media (max-width:600px){.page{padding-inline:16px}}
+.dhead{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding-block:20px 12px}
+.crumb{font-size:13px;color:var(--muted)}
+.dname{display:flex;align-items:center;gap:8px;font-size:22px;font-weight:600;color:var(--ink-strong)}
+.dname .caret{font-size:14px;color:var(--muted)}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.b{font:inherit;font-size:13px;font-weight:500;border-radius:3px;padding:8px 16px;cursor:pointer;border:1px solid var(--orange);background:var(--card);color:var(--orange-dark)}
+.b.primary{background:var(--orange);color:#fff}
+.b.ghost{border-color:var(--border);color:var(--ink)}
+.b:focus-visible,select:focus-visible,input:focus-visible,.seg button:focus-visible,summary:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-block:10px 16px;border-bottom:1px solid var(--border-soft);margin-bottom:16px}
+.f{display:flex;flex-direction:column;gap:2px}
+.f label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+select{font:inherit;font-size:13px;padding:7px 28px 7px 10px;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink)}
+.static{font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:3px;overflow:hidden}
+.seg button{font:inherit;font-size:13px;border:0;background:var(--card);color:var(--ink);padding:7px 12px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--border)}
+.seg button[aria-pressed="true"]{background:var(--head);font-weight:600;color:var(--ink-strong)}
+.mock{margin-left:auto;font-size:12px;font-weight:600;color:var(--tag-bad);background:var(--tag-bad-bg);padding:4px 10px;border-radius:3px}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.r{background:var(--card);border:1px solid var(--border);border-radius:4px;display:flex;flex-direction:column;min-width:0}
+.r header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:14px 16px 6px}
+.r h2{font-size:14px;font-weight:600;color:var(--ink-strong);margin:0}
+.r .dots{color:var(--faint);font-size:18px;line-height:1;letter-spacing:1px}
+.r .body{padding:6px 16px 12px;flex:1;min-width:0}
+.r footer{border-top:1px solid var(--border-soft);padding:8px 16px;font-size:12px;color:var(--muted)}
+.r footer a{color:var(--link);text-decoration:none}
+.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
+@media (max-width:1100px){.s3{grid-column:span 6}.s4,.s5,.s7,.s8{grid-column:span 12}.s6{grid-column:span 12}}
+@media (max-width:600px){.s3{grid-column:span 12}}
+.kpi{font-size:32px;font-weight:600;color:var(--ink-strong);font-variant-numeric:tabular-nums;line-height:1.2}
+.kpi-sub{font-size:13px;color:var(--muted)}
+.delta{font-size:13px;font-weight:600}
+.delta.up{color:var(--up)}.delta.down{color:var(--down)}
+.chart svg{width:100%;height:auto;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.scroll{overflow-x:auto}
+.yg{display:grid;grid-template-columns:112px repeat(12,minmax(26px,1fr));gap:3px;min-width:560px;font-variant-numeric:tabular-nums}
+.yg .h{font-size:11px;color:var(--muted);text-align:center}
+.yg .lbl{font-size:12px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;align-self:center}
+.yg .lbl.hire{color:var(--link)}
+.yg .c{height:16px;border-radius:2px;background:var(--c-none)}
+.yg .c.full{background:var(--c-full)}.yg .c.ramp{background:var(--c-ramp)}.yg .c.empty{background:var(--c-empty)}
+.yg .dim{opacity:.2}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{background:var(--head);font-size:12px;font-weight:600;color:var(--ink-strong);text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{font-size:13px;padding:8px 10px;border-bottom:1px solid var(--border-soft);vertical-align:middle}
+tr.sel td{background:var(--head)}
+td a{color:var(--link);text-decoration:none;font-weight:500}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:3px;white-space:nowrap}
+.t-good{background:var(--tag-good-bg);color:var(--tag-good)}.t-warn{background:var(--tag-warn-bg);color:var(--tag-warn)}.t-bad{background:var(--tag-bad-bg);color:var(--tag-bad)}
+.t-stage{background:var(--head);color:var(--ink)}
+td input{font:inherit;font-size:13px;font-weight:600;width:72px;padding:4px 6px;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink-strong);font-variant-numeric:tabular-nums}
+details.assume{background:var(--card);border:1px solid var(--border);border-radius:4px;margin-bottom:16px}
+details.assume summary{cursor:pointer;padding:12px 16px;font-weight:600;color:var(--ink-strong);font-size:14px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;padding:0 16px 14px}
+.inputs label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted)}
+.inputs input{font:inherit;font-size:15px;font-weight:600;color:var(--ink-strong);border:1px solid var(--border);border-radius:3px;padding:7px 9px;background:var(--card);width:100%}
+.assume .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;padding:0 16px 14px;font-size:12px;color:var(--muted)}
+.mixbar{display:flex;height:22px;border-radius:2px;overflow:hidden;margin-block:4px 10px}
+.mixbar span{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;min-width:0}
+.mixlab{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.foot{font-size:12px;color:var(--muted);padding-top:16px}
+</style>
+
+<nav class="topnav" aria-label="App navigation">
+  <div class="mark" aria-hidden="true"></div>
+  <span>CRM</span><span>Marketing</span><span>Sales</span><span>Service</span><span class="on">Reporting</span>
+  <div class="grow"></div><span>SB UK&amp;I</span>
+</nav>
+
+<main class="page">
+  <div class="dhead">
+    <div>
+      <div class="crumb">Reporting · Dashboards</div>
+      <div class="dname">SB UK&amp;I · Team health and retention <span class="caret">▾</span></div>
+    </div>
+    <div class="actions">
+      <button class="b ghost" type="button">Share</button>
+      <button class="b" type="button">Actions ▾</button>
+      <button class="b primary" type="button">Add report</button>
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="f"><label>Date range</label><div class="static">This year (Jan–Dec)</div></div>
+    <div class="f"><label for="region">Region</label>
+      <select id="region"><option value="all">All regions</option><option value="Dublin">Dublin</option><option value="London">London</option><option value="Remote">Remote</option></select></div>
+    <div class="f"><label>Scenario</label>
+      <div class="seg" role="group" aria-label="Scenario"><button id="sc-today" aria-pressed="true">Today</button><button id="sc-play" aria-pressed="false">With the playbook</button></div></div>
+    <span class="mock">Mock-up · sample data</span>
+  </div>
+
+  <details class="assume" id="assume">
+    <summary>Model assumptions (edit to recalculate)</summary>
+    <div class="inputs">
+      <label for="i-aes">AEs on the team<input id="i-aes" type="number" min="3" max="20" step="1"></label>
+      <label for="i-q">Quota per AE a month (k MRR)<input id="i-q" type="number" min="1" max="20" step="0.5"></label>
+      <label for="i-ramp">Ramp length (months)<input id="i-ramp" type="number" min="1" max="12" step="1"></label>
+      <label for="i-p">Productivity during ramp (%)<input id="i-p" type="number" min="0" max="100" step="5"></label>
+      <label for="i-vac">Empty months per exit<input id="i-vac" type="number" min="0" max="6" step="1"></label>
+      <label for="i-lv">Early leavers this year<input id="i-lv" type="number" min="0" max="12" step="1"></label>
+    </div>
+    <div class="row"><span id="scenario-note"></span><button class="b ghost" id="reset" type="button">Reset to the brief</button></div>
+  </details>
+
+  <div class="grid">
+    <section class="r s3"><header><h2>New MRR closed</h2><span class="dots" aria-hidden="true">···</span></header>
+      <div class="body"><div class="kpi" id="k-del"></div><div class="kpi-sub" id="k-del-s"></div></div>
+      <footer>Data from: Deals · Closed won</footer></section>
+    <section class="r s3"><header><h2>New MRR lost to attrition</h2><span class="dots" aria-hidden="true">···</span></header>
+      <div class="body"><div class="kpi" id="k-lost"></div><div class="kpi-sub" id="k-lost-s"></div></div>
+      <footer>Data from: Model · empty and ramping seats</footer></section>
+    <section class="r s3"><header><h2>Seats at full quota (Dec)</h2><span class="dots" aria-hidden="true">···</span></header>
+      <div class="body"><div class="kpi" id="k-full"></div><div class="kpi-sub" id="k-full-s"></div></div>
+      <footer>Data from: Users · Sales team</footer></section>
+    <section class="r s3"><header><h2>Regrettable exits (share of leavers)</h2><span class="dots" aria-hidden="true">···</span></header>
+      <div class="body"><div class="kpi" id="k-reg"></div><div class="kpi-sub">Target 20–30%</div></div>
+      <footer>Data from: Exit records · tagged at exit</footer></section>
+
+    <section class="r s8"><header><h2>New MRR by month vs goal</h2><span class="dots" aria-hidden="true">···</span></header>
+      <div class="body chart"><div id="chart"></div>
+        <div class="legend"><span><i style="background:var(--blue)"></i>New MRR closed</span><span><i style="background:var(--orange)"></i>Monthly goal (full team)</span></div></div>
+      <footer>Data from: Deals · Amount (MRR) · Grouped by close date (month)</footer></section>
+    <section class="r s4"><header><h2>Leavers by type</h2><span class="dots" aria-hidden="true">···</span></header>
+      <div class="body" id="mix"></div>
+      <footer>Data from: Exit records · Leaver type</footer></section>
+
+
+    <section class="r s12"><header><h2>Retention scorecard: a measure for every fix</h2><span class="dots" aria-hidden="true">···</span></header>
+      <div class="body"><div class="scroll"><table id="score"></table></div></div>
+      <footer>Data from: Custom report · one measure per fix · type over a value to update</footer></section>
+  </div>
+
+  <p class="foot">Illustrative mock-up built on the interview scenario (9 AEs, 4.5k new MRR per AE a month, 9-month ramp), with sample KPI values. Not a real account. Slide figures round each leaver to 29k; this model uses the exact 29.25k. The payoff slide adds ~27k from backfilling ~6 promotions a month faster.</p>
+</main>
+
+<script>
+(function(){
+  var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var BRIEF={aes:9,q:4.5,ramp:9,p:50,vac:2,leavers:6};
+  var PRESETS={today:{vac:2,leavers:6},play:{vac:1,leavers:3}};
+  var MIX={today:[20,50,30],play:[65,25,10]};
+  var PLAYS=[
+    {n:1,stage:'Team reset',play:'Own it, build it together',m:'Team pulse score (out of 10)',v:6.1,t:7.5,dir:'up',u:''},
+    {n:2,stage:'Team reset',play:'The team writes the plan',m:'Team ideas live, with owners',v:0,t:100,dir:'up',u:'%'},
+    {n:3,stage:'Recruit & train',play:'Hiring scorecard',m:'90-day exits (% of hires)',v:25,t:10,dir:'down',u:'%'},
+    {n:4,stage:'Recruit & train',play:'Every AE, every week',m:'Coaching log done weekly',v:40,t:100,dir:'up',u:'%'},
+    {n:5,stage:'Recruit & train',play:'Ramp support',m:'Ramping reps on track',v:60,t:80,dir:'up',u:'%'},
+    {n:6,stage:'Win together',play:'Manager on $1k+ deals',m:'Win rate, $1k+ deals',v:22,t:30,dir:'up',u:'%'},
+    {n:7,stage:'Win together',play:'Path upmarket, in the open',m:'Leavers who were promoted',v:20,t:60,dir:'up',u:'%'},
+    {n:8,stage:'Win together',play:'A fair number',m:'Reps at quota',v:43,t:60,dir:'up',u:'%'},
+    {n:9,stage:'People review',play:'Attrition risk, rated monthly',m:'Regrettable exits flagged ahead',v:20,t:80,dir:'up',u:'%'},
+    {n:10,stage:'People review',play:'Hire ahead',m:'Empty months per exit',v:2,t:1,dir:'down',u:''}
+  ];
+  var REGIONS=[{r:'Dublin',track:75,pulse:7.6},{r:'London',track:83,pulse:8.1},{r:'Remote',track:75,pulse:7.4}];
+  var KEY='sbuki-dash-v2';
+  var st={cfg:Object.assign({},BRIEF),scenario:'today',region:'all',vals:{}};
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){st.vals=saved.vals||{}}}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({vals:st.vals}))}catch(e){}}
+  var $=function(id){return document.getElementById(id)};
+  var ids={aes:'i-aes',q:'i-q',ramp:'i-ramp',p:'i-p',vac:'i-vac',leavers:'i-lv'};
+  function k(x){var r=Math.round(x*10)/10;return (r%1===0?r.toFixed(0):r.toFixed(1))+'k'}
+  function regionOf(i,n){var d=Math.ceil(n*4/9),l=d+Math.ceil(n*3/9);return i<d?'Dublin':(i<l?'London':'Remote')}
+  function leaveMonths(n){
+    if(n===6)return [2,3,5,7,8,10];
+    if(n===3)return [3,7,10];
+    var out=[];for(var i=0;i<n;i++){out.push(Math.min(11,Math.max(1,Math.round((i+1)*12/(n+1)))))}return out;
+  }
+  function simulate(c,region){
+    var n=Math.max(0,Math.min(c.leavers,c.aes)),lm=leaveMonths(n),p=c.p/100,rows=[],hires=[],carry=0;
+    for(var s=0;s<c.aes;s++){
+      var reg=regionOf(s,c.aes),li=s-(c.aes-n),cells=[];
+      if(li>=0){
+        var L=lm[li],S=L+c.vac+1;
+        for(var m=1;m<=12;m++){cells.push(m<=L?'full':(m<=L+c.vac?'empty':'none'))}
+        var hc=[];for(var m2=1;m2<=12;m2++){hc.push(m2<S?'none':(m2<S+c.ramp?'ramp':'full'))}
+        if(S<=12)hires.push({name:'New hire '+(hires.length+1),region:reg,cells:hc,hire:true});
+        var emptyBeyond=Math.max(0,L+c.vac-12);
+        var rampBeyond=Math.max(0,(S+c.ramp-1)-Math.max(S,13)+1);
+        if(region==='all'||region===reg)carry+=emptyBeyond*c.q+rampBeyond*c.q*(1-p);
+      } else {for(var m3=1;m3<=12;m3++){cells.push('full')}}
+      rows.push({name:'AE '+(s+1),region:reg,cells:cells,hire:false});
+    }
+    rows=rows.concat(hires);
+    var monthly=[],fullDec=0,seats=0;
+    for(var m4=0;m4<12;m4++){
+      var t=0;rows.forEach(function(r){if(region!=='all'&&r.region!==region)return;var v=r.cells[m4];t+=v==='full'?c.q:(v==='ramp'?c.q*p:0)});
+      monthly.push(t);
+    }
+    rows.forEach(function(r){if((region==='all'||r.region===region)&&r.cells[11]==='full')fullDec++});
+    for(var s2=0;s2<c.aes;s2++){if(region==='all'||regionOf(s2,c.aes)===region)seats++}
+    var target=seats*c.q*12,del=monthly.reduce(function(a,b){return a+b},0);
+    return {rows:rows,monthly:monthly,target:target,del:del,lost:target-del,carry:carry,fullDec:fullDec,seats:seats};
+  }
+  function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+  function renderChart(sim){
+    var W=760,H=260,L=44,R=12,T=12,B=28,goal=sim.target/12,max=Math.max(goal,Math.max.apply(null,sim.monthly))*1.15||1;
+    var y=function(v){return T+(H-T-B)*(1-v/max)},bw=(W-L-R)/12;
+    var ink=css('--muted'),grid=css('--border-soft'),blue=css('--blue'),orange=css('--orange');
+    var svg='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Monthly new MRR against goal">';
+    var step=max>60?20:(max>20?10:5);
+    for(var g=0;g<=max;g+=step){svg+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(g)+'" y2="'+y(g)+'" stroke="'+grid+'" stroke-width="1"/><text x="'+(L-8)+'" y="'+(y(g)+4)+'" text-anchor="end" font-size="11" fill="'+ink+'" font-family="Lexend Deca, Arial">'+g+'k</text>'}
+    sim.monthly.forEach(function(v,i){
+      var x=L+i*bw+bw*0.18,w=bw*0.64;
+      svg+='<rect x="'+x+'" y="'+y(v)+'" width="'+w+'" height="'+(y(0)-y(v))+'" rx="2" fill="'+blue+'"><title>'+MONTHS[i]+': '+k(v)+'</title></rect>';
+      svg+='<text x="'+(x+w/2)+'" y="'+(H-10)+'" text-anchor="middle" font-size="11" fill="'+ink+'" font-family="Lexend Deca, Arial">'+MONTHS[i]+'</text>';
+    });
+    svg+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(goal)+'" y2="'+y(goal)+'" stroke="'+orange+'" stroke-width="2" stroke-dasharray="6 4"/>';
+    svg+='<text x="'+(W-R)+'" y="'+(y(goal)-6)+'" text-anchor="end" font-size="11" font-weight="600" fill="'+orange+'" font-family="Lexend Deca, Arial">Goal '+k(goal)+'</text></svg>';
+    $('chart').innerHTML=svg;
+  }
+  function renderGrid(sim){
+    var h='<div></div>';MONTHS.forEach(function(m){h+='<div class="h">'+m+'</div>'});
+    sim.rows.forEach(function(r){
+      var dim=(st.region!=='all'&&r.region!==st.region)?' dim':'';
+      h+='<div class="lbl'+(r.hire?' hire':'')+dim+'">'+r.name+' · '+r.region.slice(0,3)+'</div>';
+      r.cells.forEach(function(c,i){h+='<div class="c '+c+dim+'" title="'+r.name+', '+MONTHS[i]+': '+(c==='full'?'full quota':c==='ramp'?'ramping':c==='empty'?'seat empty':'not in seat')+'"></div>'});
+    });
+    $('grid').innerHTML=h;
+  }
+  function renderKpis(sim){
+    var pct=sim.target?Math.round(sim.del/sim.target*100):0;
+    $('k-del').textContent=k(sim.del);
+    $('k-del-s').innerHTML=pct+'% of the '+k(sim.target)+' goal';
+    $('k-lost').textContent=k(sim.lost);
+    $('k-lost-s').innerHTML='<span class="delta down">▼ '+(sim.target?Math.round(sim.lost/sim.target*100):0)+'% of goal</span> · '+k(sim.carry)+' more lands next year';
+    $('k-full').textContent=sim.fullDec+' of '+sim.seats;
+    $('k-full-s').textContent=sim.seats-sim.fullDec===0?'Team at full strength':(sim.seats-sim.fullDec)+' seats empty or ramping';
+    $('k-reg').innerHTML=MIX[st.scenario][1]+'%'+(st.scenario==='play'?' <span class="delta up">▼ 25 pts</span>':'');
+  }
+  function renderMix(){
+    var h='';[['Now (estimate)',MIX.today],['Target',MIX.play]].forEach(function(r){
+      var a=r[1];
+      h+='<div class="mixlab"><span>'+r[0]+'</span><span>'+a[0]+' / '+a[1]+' / '+a[2]+'</span></div>'+
+      '<div class="mixbar" role="img" aria-label="'+r[0]+': promoted '+a[0]+'%, regrettable '+a[1]+'%, non-regrettable '+a[2]+'%">'+
+      '<span style="flex-grow:'+a[0]+';background:var(--teal)">'+a[0]+'%</span><span style="flex-grow:'+a[1]+';background:var(--orange)">'+a[1]+'%</span><span style="flex-grow:'+a[2]+';background:var(--slate)">'+a[2]+'%</span></div>';
+    });
+    h+='<div class="legend"><span><i style="background:var(--teal)"></i>Promoted upmarket</span><span><i style="background:var(--orange)"></i>Regrettable</span><span><i style="background:var(--slate)"></i>Non-regrettable</span></div>';
+    $('mix').innerHTML=h;
+  }
+  function renderRegions(){
+    var h='<tr><th>Region</th><th>Seats</th><th>New MRR</th><th>On track</th><th>Pulse</th></tr>';
+    REGIONS.forEach(function(r){
+      var sim=simulate(st.cfg,r.r);
+      h+='<tr class="'+(st.region===r.r?'sel':'')+'"><td><a href="#'+r.r+'" data-r="'+r.r+'">'+r.r+'</a></td><td>'+sim.seats+'</td><td>'+k(sim.del)+' / '+k(sim.target)+'</td><td>'+r.track+'%</td><td>'+r.pulse+'</td></tr>';
+    });
+    $('regions').innerHTML=h;
+    Array.prototype.forEach.call($('regions').querySelectorAll('a[data-r]'),function(a){a.addEventListener('click',function(e){e.preventDefault();st.region=a.getAttribute('data-r');$('region').value=st.region;render()})});
+  }
+  function status(p,v){
+    var ok=p.dir==='up'?v>=p.t:v<=p.t,near=p.dir==='up'?v>=p.t*0.85:v<=p.t*1.5;
+    return ok?['On track','t-good']:(near?['At risk','t-warn']:['Off track','t-bad']);
+  }
+  function renderScore(){
+    var h='<tr><th>Fix</th><th>Stage</th><th>Measure</th><th>Value</th><th>Target</th><th>Status</th></tr>';
+    PLAYS.forEach(function(p){
+      var v=(st.vals[p.n]!==undefined)?st.vals[p.n]:p.v,s=status(p,v);
+      h+='<tr><td><a href="#play-'+p.n+'">'+p.n+' · '+p.play+'</a></td><td><span class="tag t-stage">'+p.stage+'</span></td><td>'+p.m+'</td>'+
+        '<td><input id="pv-'+p.n+'" type="number" step="any" value="'+v+'" aria-label="'+p.m+'"> '+p.u+'</td>'+
+        '<td>'+(p.dir==='up'?'≥ ':'≤ ')+p.t+p.u+'</td><td><span class="tag '+s[1]+'" id="ps-'+p.n+'">'+s[0]+'</span></td></tr>';
+    });
+    $('score').innerHTML=h;
+    PLAYS.forEach(function(p){$('pv-'+p.n).addEventListener('input',function(e){
+      var v=parseFloat(e.target.value);if(isNaN(v))return;st.vals[p.n]=v;save();
+      var s=status(p,v),el=$('ps-'+p.n);el.textContent=s[0];el.className='tag '+s[1];
+    })});
+    Array.prototype.forEach.call($('score').querySelectorAll('a'),function(a){a.addEventListener('click',function(e){e.preventDefault()})});
+  }
+  function syncInputs(){Object.keys(ids).forEach(function(key){$(ids[key]).value=st.cfg[key]})}
+  function render(){
+    var sim=simulate(st.cfg,st.region);
+    renderKpis(sim);renderChart(sim);
+    $('scenario-note').textContent=st.scenario==='today'
+      ?'Today: 6 early leavers a year (3 every six months), 2 empty months each.'
+      :'With the playbook: early leavers halved to 3, backfills one month faster.';
+  }
+  function setScenario(s){
+    st.scenario=s;Object.assign(st.cfg,PRESETS[s]);syncInputs();
+    $('sc-today').setAttribute('aria-pressed',s==='today');$('sc-play').setAttribute('aria-pressed',s==='play');
+    render();
+  }
+  Object.keys(ids).forEach(function(key){$(ids[key]).addEventListener('input',function(e){var v=parseFloat(e.target.value);if(isNaN(v))return;st.cfg[key]=v;render()})});
+  $('sc-today').addEventListener('click',function(){setScenario('today')});
+  $('sc-play').addEventListener('click',function(){setScenario('play')});
+  $('region').addEventListener('change',function(e){st.region=e.target.value;render()});
+  $('reset').addEventListener('click',function(){st.cfg=Object.assign({},BRIEF);st.scenario='today';st.region='all';$('region').value='all';st.vals={};save();
+    $('sc-today').setAttribute('aria-pressed','true');$('sc-play').setAttribute('aria-pressed','false');syncInputs();renderScore();render()});
+  if(window.matchMedia){try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){render()})}catch(e){}}
+  syncInputs();renderMix();renderScore();render();
+})();
+</script>
