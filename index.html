@@ -99,6 +99,17 @@ details.assume summary{cursor:pointer;padding:12px 16px;font-weight:600;color:va
 .mixbar{display:flex;height:22px;border-radius:2px;overflow:hidden;margin-block:4px 10px}
 .mixbar span{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;min-width:0}
 .mixlab{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.fx td input{width:64px}
+.fx td:nth-child(2),.fx th:nth-child(2){white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px;font-size:12px;color:var(--muted)}
+.chips .tag{font-size:13px;padding:4px 10px}
+.packgrid{display:grid;grid-template-columns:minmax(0,3fr) minmax(260px,1fr);gap:16px}
+@media (max-width:1100px){.packgrid{grid-template-columns:1fr}}
+td select{font:inherit;font-size:13px;font-weight:600;padding:3px 6px;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink-strong)}
+tr.dim td{opacity:.35}
+#pack td:first-child,#pack td:nth-child(3){white-space:nowrap}
+.trend{font-weight:700}.trend.u{color:var(--up)}.trend.d{color:var(--down)}.trend.f{color:var(--muted)}
+.agenda{margin:0;padding-left:18px;font-size:13px;color:var(--ink)}.agenda li{margin-bottom:6px}
 .foot{font-size:12px;color:var(--muted);padding-top:16px}
 </style>
 
@@ -166,9 +177,29 @@ details.assume summary{cursor:pointer;padding:12px 16px;font-weight:600;color:va
       <footer>Data from: Exit records · Leaver type</footer></section>
 
 
-    <section class="r s12"><header><h2>Retention scorecard: a measure for every fix</h2><span class="dots" aria-hidden="true">···</span></header>
-      <div class="body"><div class="scroll"><table id="score"></table></div></div>
-      <footer>Data from: Custom report · one measure per fix · type over a value to update</footer></section>
+    <section class="r s4"><header><h2>Fix 1 · The team reset</h2><span class="dots" aria-hidden="true">···</span></header>
+      <div class="body"><table class="fx" id="fx-reset"></table></div>
+      <footer>Data from: Pulse survey · team plan tracker</footer></section>
+    <section class="r s4"><header><h2>Fix 2 · Recruit and train</h2><span class="dots" aria-hidden="true">···</span></header>
+      <div class="body"><table class="fx" id="fx-train"></table></div>
+      <footer>Data from: Hires · coaching log · ramp milestones</footer></section>
+    <section class="r s4"><header><h2>Fix 3 · Win together</h2><span class="dots" aria-hidden="true">···</span></header>
+      <div class="body"><table class="fx" id="fx-win"></table></div>
+      <footer>Data from: Deals over $1k MRR · exit records · quota</footer></section>
+
+    <section class="r s12"><header><h2>Headcount pack · monthly people review</h2><span class="dots" aria-hidden="true">···</span></header>
+      <div class="body">
+        <div class="chips" id="pack-sum"></div>
+        <div class="packgrid">
+          <div class="scroll"><table id="pack"></table></div>
+          <div>
+            <table class="fx" id="fx-review"></table>
+            <p style="font-size:12px;font-weight:600;color:var(--ink-strong);margin:14px 0 6px">Every month: manager, director, recruitment</p>
+            <ol class="agenda"><li><b>Performance:</b> trailing results and input trends. Calls or pipeline dipping is the first signal</li><li><b>Attrition risk:</b> every AE rated low, medium or high, with the reason</li><li><b>Headcount plan:</b> hire ahead of high risk and promotions; an owner for every action</li></ol>
+          </div>
+        </div>
+      </div>
+      <footer>Data from: Users · Deals · Activities · 1:1 notes · change a risk rating or value to update</footer></section>
   </div>
 
   <p class="foot">Illustrative mock-up built on the interview scenario (9 AEs, 4.5k new MRR per AE a month, 9-month ramp), with sample KPI values. Not a real account. Slide figures round each leaver to 29k; this model uses the exact 29.25k. The payoff slide adds ~27k from backfilling ~6 promotions a month faster.</p>
@@ -181,22 +212,33 @@ details.assume summary{cursor:pointer;padding:12px 16px;font-weight:600;color:va
   var PRESETS={today:{vac:2,leavers:6},play:{vac:1,leavers:3}};
   var MIX={today:[20,50,30],play:[65,25,10]};
   var PLAYS=[
-    {n:1,stage:'Team reset',play:'Own it, build it together',m:'Team pulse score (out of 10)',v:6.1,t:7.5,dir:'up',u:''},
-    {n:2,stage:'Team reset',play:'The team writes the plan',m:'Team ideas live, with owners',v:0,t:100,dir:'up',u:'%'},
-    {n:3,stage:'Recruit & train',play:'Hiring scorecard',m:'90-day exits (% of hires)',v:25,t:10,dir:'down',u:'%'},
-    {n:4,stage:'Recruit & train',play:'Every AE, every week',m:'Coaching log done weekly',v:40,t:100,dir:'up',u:'%'},
-    {n:5,stage:'Recruit & train',play:'Ramp support',m:'Ramping reps on track',v:60,t:80,dir:'up',u:'%'},
-    {n:6,stage:'Win together',play:'Manager on $1k+ deals',m:'Win rate, $1k+ deals',v:22,t:30,dir:'up',u:'%'},
-    {n:7,stage:'Win together',play:'Path upmarket, in the open',m:'Leavers who were promoted',v:20,t:60,dir:'up',u:'%'},
-    {n:8,stage:'Win together',play:'A fair number',m:'Reps at quota',v:43,t:60,dir:'up',u:'%'},
-    {n:9,stage:'People review',play:'Attrition risk, rated monthly',m:'Regrettable exits flagged ahead',v:20,t:80,dir:'up',u:'%'},
-    {n:10,stage:'People review',play:'Hire ahead',m:'Empty months per exit',v:2,t:1,dir:'down',u:''}
+    {n:1,g:'reset',m:'Team pulse score (out of 10)',v:6.1,t:7.5,dir:'up',u:''},
+    {n:2,g:'reset',m:'Team ideas live, with owners',v:0,t:100,dir:'up',u:'%'},
+    {n:3,g:'train',m:'90-day exits (% of hires)',v:25,t:10,dir:'down',u:'%'},
+    {n:4,g:'train',m:'Ramping reps on track',v:60,t:80,dir:'up',u:'%'},
+    {n:5,g:'train',m:'Coaching log done weekly',v:40,t:100,dir:'up',u:'%'},
+    {n:6,g:'win',m:'Win rate, $1k+ deals',v:22,t:30,dir:'up',u:'%'},
+    {n:7,g:'win',m:'Leavers who were promoted',v:20,t:60,dir:'up',u:'%'},
+    {n:8,g:'win',m:'Reps at quota',v:43,t:60,dir:'up',u:'%'},
+    {n:9,g:'review',m:'Regrettable exits flagged ahead',v:20,t:80,dir:'up',u:'%'},
+    {n:10,g:'review',m:'Empty months per exit',v:2,t:1,dir:'down',u:''}
+  ];
+  var PACK=[
+    {ae:'AE 1',r:'London',ten:14,att:'112%',tr:'u',promo:'Ready now',risk:'Low',why:'Promotion-ready',act:'Plan the backfill now'},
+    {ae:'AE 2',r:'Dublin',ten:7,att:'95%',tr:'d',promo:'6+ months',risk:'High',why:'Signals: competitor interest',act:'Pay benchmark and path talk this week'},
+    {ae:'AE 3',r:'London',ten:4,att:'60%',tr:'f',promo:'Ramping',risk:'Medium',why:'Performance: behind ramp',act:'Extra call reviews; manager on deals'},
+    {ae:'AE 4',r:'Remote',ten:11,att:'88%',tr:'d',promo:'3–6 months',risk:'Medium',why:'Behaviour: effort dipping',act:'Inputs reset in the next 1:1'},
+    {ae:'AE 5',r:'Dublin',ten:2,att:'–',tr:'u',promo:'Ramping',risk:'Low',why:'Ramping well',act:'Keep the buddy cadence'},
+    {ae:'AE 6',r:'London',ten:9,att:'104%',tr:'u',promo:'3–6 months',risk:'Low',why:'On track',act:'Stretch role: pod lead'},
+    {ae:'AE 7',r:'Dublin',ten:5,att:'72%',tr:'d',promo:'Ramping',risk:'Medium',why:'Signals: quiet in 1:1s',act:'Skip-level coffee with director'},
+    {ae:'AE 8',r:'Remote',ten:12,att:'98%',tr:'f',promo:'Ready in 3 months',risk:'Medium',why:'Waiting on a role',act:'Agree timeline with mid-market manager'},
+    {ae:'AE 9',r:'London',ten:1,att:'–',tr:'u',promo:'Ramping',risk:'Low',why:'New starter',act:'Week-one plan with buddy'}
   ];
   var REGIONS=[{r:'Dublin',track:75,pulse:7.6},{r:'London',track:83,pulse:8.1},{r:'Remote',track:75,pulse:7.4}];
-  var KEY='sbuki-dash-v2';
-  var st={cfg:Object.assign({},BRIEF),scenario:'today',region:'all',vals:{}};
-  try{var saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){st.vals=saved.vals||{}}}catch(e){}
-  function save(){try{localStorage.setItem(KEY,JSON.stringify({vals:st.vals}))}catch(e){}}
+  var KEY='sbuki-dash-v3';
+  var st={cfg:Object.assign({},BRIEF),scenario:'today',region:'all',vals:{},risk:{}};
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){st.vals=saved.vals||{};st.risk=saved.risk||{}}}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({vals:st.vals,risk:st.risk}))}catch(e){}}
   var $=function(id){return document.getElementById(id)};
   var ids={aes:'i-aes',q:'i-q',ramp:'i-ramp',p:'i-p',vac:'i-vac',leavers:'i-lv'};
   function k(x){var r=Math.round(x*10)/10;return (r%1===0?r.toFixed(0):r.toFixed(1))+'k'}
@@ -292,19 +334,37 @@ details.assume summary{cursor:pointer;padding:12px 16px;font-weight:600;color:va
     return ok?['On track','t-good']:(near?['At risk','t-warn']:['Off track','t-bad']);
   }
   function renderScore(){
-    var h='<tr><th>Fix</th><th>Stage</th><th>Measure</th><th>Value</th><th>Target</th><th>Status</th></tr>';
-    PLAYS.forEach(function(p){
-      var v=(st.vals[p.n]!==undefined)?st.vals[p.n]:p.v,s=status(p,v);
-      h+='<tr><td><a href="#play-'+p.n+'">'+p.n+' · '+p.play+'</a></td><td><span class="tag t-stage">'+p.stage+'</span></td><td>'+p.m+'</td>'+
-        '<td><input id="pv-'+p.n+'" type="number" step="any" value="'+v+'" aria-label="'+p.m+'"> '+p.u+'</td>'+
-        '<td>'+(p.dir==='up'?'≥ ':'≤ ')+p.t+p.u+'</td><td><span class="tag '+s[1]+'" id="ps-'+p.n+'">'+s[0]+'</span></td></tr>';
+    ['reset','train','win','review'].forEach(function(g){
+      var h='<tr><th>Measure</th><th>Value</th><th>Target</th><th>Status</th></tr>';
+      PLAYS.filter(function(p){return p.g===g}).forEach(function(p){
+        var v=(st.vals[p.n]!==undefined)?st.vals[p.n]:p.v,s=status(p,v);
+        h+='<tr><td>'+p.m+'</td><td><input id="pv-'+p.n+'" type="number" step="any" value="'+v+'" aria-label="'+p.m+'"> '+p.u+'</td>'+
+          '<td>'+(p.dir==='up'?'≥ ':'≤ ')+p.t+p.u+'</td><td><span class="tag '+s[1]+'" id="ps-'+p.n+'">'+s[0]+'</span></td></tr>';
+      });
+      $('fx-'+g).innerHTML=h;
     });
-    $('score').innerHTML=h;
     PLAYS.forEach(function(p){$('pv-'+p.n).addEventListener('input',function(e){
       var v=parseFloat(e.target.value);if(isNaN(v))return;st.vals[p.n]=v;save();
       var s=status(p,v),el=$('ps-'+p.n);el.textContent=s[0];el.className='tag '+s[1];
     })});
-    Array.prototype.forEach.call($('score').querySelectorAll('a'),function(a){a.addEventListener('click',function(e){e.preventDefault()})});
+    renderPack();
+  }
+  var RCLS={High:'t-bad',Medium:'t-warn',Low:'t-good'};
+  var TR={u:['▲','u','Rising'],d:['▼','d','Falling'],f:['▶','f','Flat']};
+  function riskOf(i){return st.risk[i]||PACK[i].risk}
+  function renderPack(){
+    var h='<tr><th>AE</th><th>Region</th><th>Tenure</th><th>Attainment</th><th>Inputs</th><th>Promotion</th><th>Attrition risk</th><th>Reason</th><th>Next action</th></tr>';
+    var cnt={High:0,Medium:0,Low:0};
+    PACK.forEach(function(a,i){
+      var on=st.region==='all'||st.region===a.r,rk=riskOf(i);if(on)cnt[rk]++;
+      var opts=['Low','Medium','High'].map(function(o){return '<option'+(o===rk?' selected':'')+'>'+o+'</option>'}).join('');
+      h+='<tr class="'+(on?'':'dim')+'"><td><b>'+a.ae+'</b></td><td>'+a.r+'</td><td>'+a.ten+' mo</td><td>'+a.att+'</td>'+
+        '<td><span class="trend '+TR[a.tr][1]+'" title="'+TR[a.tr][2]+'">'+TR[a.tr][0]+'</span> '+TR[a.tr][2]+'</td><td>'+a.promo+'</td>'+
+        '<td><select id="rk-'+i+'" aria-label="Attrition risk for '+a.ae+'" class="tag '+RCLS[rk]+'">'+opts+'</select></td><td>'+a.why+'</td><td>'+a.act+'</td></tr>';
+    });
+    $('pack').innerHTML=h;
+    $('pack-sum').innerHTML='<span>Attrition risk'+(st.region==='all'?'':' · '+st.region)+':</span><span class="tag t-bad">'+cnt.High+' high</span><span class="tag t-warn">'+cnt.Medium+' medium</span><span class="tag t-good">'+cnt.Low+' low</span><span>· Illustrative AEs, sample data</span>';
+    PACK.forEach(function(a,i){$('rk-'+i).addEventListener('change',function(e){st.risk[i]=e.target.value;save();renderPack()})});
   }
   function syncInputs(){Object.keys(ids).forEach(function(key){$(ids[key]).value=st.cfg[key]})}
   function render(){
@@ -322,8 +382,8 @@ details.assume summary{cursor:pointer;padding:12px 16px;font-weight:600;color:va
   Object.keys(ids).forEach(function(key){$(ids[key]).addEventListener('input',function(e){var v=parseFloat(e.target.value);if(isNaN(v))return;st.cfg[key]=v;render()})});
   $('sc-today').addEventListener('click',function(){setScenario('today')});
   $('sc-play').addEventListener('click',function(){setScenario('play')});
-  $('region').addEventListener('change',function(e){st.region=e.target.value;render()});
-  $('reset').addEventListener('click',function(){st.cfg=Object.assign({},BRIEF);st.scenario='today';st.region='all';$('region').value='all';st.vals={};save();
+  $('region').addEventListener('change',function(e){st.region=e.target.value;render();renderPack()});
+  $('reset').addEventListener('click',function(){st.cfg=Object.assign({},BRIEF);st.scenario='today';st.region='all';$('region').value='all';st.vals={};st.risk={};save();
     $('sc-today').setAttribute('aria-pressed','true');$('sc-play').setAttribute('aria-pressed','false');syncInputs();renderScore();render()});
   if(window.matchMedia){try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){render()})}catch(e){}}
   syncInputs();renderMix();renderScore();render();
