@@ -110,6 +110,31 @@ tr.dim td{opacity:.35}
 #pack td:first-child,#pack td:nth-child(3){white-space:nowrap}
 .trend{font-weight:700}.trend.u{color:var(--up)}.trend.d{color:var(--down)}.trend.f{color:var(--muted)}
 .agenda{margin:0;padding-left:18px;font-size:13px;color:var(--ink)}.agenda li{margin-bottom:6px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.tabs button{font:inherit;font-size:14px;font-weight:500;background:none;border:0;border-bottom:3px solid transparent;padding:10px 14px;color:var(--muted);cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink-strong);font-weight:600;border-bottom-color:var(--orange)}
+[hidden]{display:none!important}
+:root{--s-full:#213343;--s-ramp:#7FD1DE;--s-empty:#FF4800;--s-none:#EAF0F6}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--s-full:#99AFC2;--s-ramp:#3E8E9B;--s-none:#21323F}}
+:root[data-theme="dark"]{--s-full:#99AFC2;--s-ramp:#3E8E9B;--s-none:#21323F}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:4px 16px 12px}
+.tool{font:inherit;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer}
+.tool[aria-pressed="true"]{border-color:var(--ink-strong);box-shadow:inset 0 0 0 1px var(--ink-strong);font-weight:600;color:var(--ink-strong)}
+.tool i{width:14px;height:14px;border-radius:2px;display:inline-block}
+.tools .sep{width:1px;height:24px;background:var(--border);margin-inline:4px}
+.sp{display:grid;grid-template-columns:120px repeat(12,minmax(34px,1fr)) 56px;gap:3px;min-width:720px;font-variant-numeric:tabular-nums;user-select:none;-webkit-user-select:none;touch-action:none}
+.sp .h{font-size:12px;color:var(--muted);text-align:center;align-self:end}
+.sp .lbl{font-size:13px;color:var(--ink-strong);align-self:center;white-space:nowrap;display:flex;gap:6px;align-items:center}
+.sp .lbl.hire{color:var(--link)}
+.sp .lbl button{font:inherit;font-size:12px;border:0;background:none;color:var(--faint);cursor:pointer;padding:0 2px}
+.sp .c{height:28px;border-radius:3px;background:var(--s-none);cursor:pointer;transition:transform .08s}
+.sp .c.full{background:var(--s-full)}.sp .c.ramp{background:var(--s-ramp)}.sp .c.empty{background:var(--s-empty)}
+.sp .c.pick{outline:2px solid var(--orange);outline-offset:1px}
+.sp .c.ghost{opacity:.55;transform:scale(.92)}
+.sp .tot{font-size:13px;font-weight:600;color:var(--ink-strong);text-align:center;align-self:center}
+.sp .rowsum{font-size:12px;color:var(--muted);text-align:right;align-self:center}
+.sp .rule{grid-column:1/-1;height:1px;background:var(--border);margin-block:4px}
+.hint{font-size:12px;color:var(--muted);padding:0 16px 10px}
 .foot{font-size:12px;color:var(--muted);padding-top:16px}
 </style>
 
@@ -141,6 +166,11 @@ tr.dim td{opacity:.35}
     <span class="mock">Mock-up · sample data</span>
   </div>
 
+  <div class="tabs" role="tablist" aria-label="Dashboard views">
+    <button role="tab" id="t-health" aria-selected="true" aria-controls="tab-health">Team health</button>
+    <button role="tab" id="t-seats" aria-selected="false" aria-controls="tab-seats">Seat plan · year view</button>
+  </div>
+  <div id="tab-health" role="tabpanel" aria-labelledby="t-health">
   <details class="assume" id="assume">
     <summary>Model assumptions (edit to recalculate)</summary>
     <div class="inputs">
@@ -200,6 +230,32 @@ tr.dim td{opacity:.35}
         </div>
       </div>
       <footer>Data from: Users · Deals · Activities · 1:1 notes · change a risk rating or value to update</footer></section>
+  </div>
+
+  </div>
+
+  <div id="tab-seats" role="tabpanel" aria-labelledby="t-seats" hidden>
+    <div class="grid">
+      <section class="r s3"><header><h2>New MRR delivered</h2></header><div class="body"><div class="kpi" id="sp-del"></div><div class="kpi-sub" id="sp-del-s"></div></div></section>
+      <section class="r s3"><header><h2>New MRR lost</h2></header><div class="body"><div class="kpi" id="sp-lost"></div><div class="kpi-sub" id="sp-lost-s"></div></div></section>
+      <section class="r s3"><header><h2>Empty seat-months</h2></header><div class="body"><div class="kpi" id="sp-empty"></div><div class="kpi-sub" id="sp-empty-s"></div></div></section>
+      <section class="r s3"><header><h2>Full team months</h2></header><div class="body"><div class="kpi" id="sp-fullm"></div><div class="kpi-sub">months with every seat at full quota</div></div></section>
+      <section class="r s12"><header><h2>Nine seats, and never a full team</h2><span class="dots" aria-hidden="true">···</span></header>
+        <div class="tools" role="toolbar" aria-label="Edit tools">
+          <button class="tool" data-tool="move" aria-pressed="true">✥ Move a block</button>
+          <span class="sep"></span>
+          <button class="tool" data-tool="full" aria-pressed="false"><i style="background:var(--s-full)"></i>Full quota</button>
+          <button class="tool" data-tool="ramp" aria-pressed="false"><i style="background:var(--s-ramp)"></i>Ramping</button>
+          <button class="tool" data-tool="empty" aria-pressed="false"><i style="background:var(--s-empty)"></i>Seat empty</button>
+          <button class="tool" data-tool="none" aria-pressed="false"><i style="background:var(--s-none);border:1px solid var(--border)"></i>Not in seat</button>
+          <span class="sep"></span>
+          <button class="b ghost" id="sp-add" type="button">+ New hire row</button>
+          <button class="b ghost" id="sp-reset" type="button">Reset to the brief</button>
+        </div>
+        <div class="hint" id="sp-hint"></div>
+        <div class="body"><div class="scroll"><div class="sp" id="sp"></div></div></div>
+        <footer>Each block is one AE for one month · full quota = quota per AE, ramping = quota × ramp productivity (set in model assumptions) · target = seats × quota × 12</footer></section>
+    </div>
   </div>
 
   <p class="foot">Illustrative mock-up built on the interview scenario (9 AEs, 4.5k new MRR per AE a month, 9-month ramp), with sample KPI values. Not a real account. Slide figures round each leaver to 29k; this model uses the exact 29.25k. The payoff slide adds ~27k from backfilling ~6 promotions a month faster.</p>
@@ -387,5 +443,77 @@ tr.dim td{opacity:.35}
     $('sc-today').setAttribute('aria-pressed','true');$('sc-play').setAttribute('aria-pressed','false');syncInputs();renderScore();render()});
   if(window.matchMedia){try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){render()})}catch(e){}}
   syncInputs();renderMix();renderScore();render();
+  /* ---- Seat plan tab ---- */
+  var SPKEY='sbuki-seat-v1',MS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function spBase(){return simulate(BRIEF,'all').rows.map(function(r){return {name:r.name,hire:r.hire,cells:r.cells.slice()}})}
+  var sp={rows:null,tool:'move',drag:null};
+  try{var sv=JSON.parse(localStorage.getItem(SPKEY)||'null');if(sv&&sv.rows)sp.rows=sv.rows}catch(e){}
+  if(!sp.rows)sp.rows=spBase();
+  function spSave(){try{localStorage.setItem(SPKEY,JSON.stringify({rows:sp.rows}))}catch(e){}}
+  var HINT={move:'Drag any block, or a run of same-coloured blocks, left or right to change when it happens, or onto another row to swap. Try dragging an empty gap one month earlier.',full:'Click or drag across months to paint full quota.',ramp:'Click or drag across months to paint a ramping hire.',empty:'Click or drag across months to paint an empty seat.',none:'Click or drag to clear months (not in seat).'};
+  function spRender(){
+    var q=st.cfg.q,p=st.cfg.p/100,seats=st.cfg.aes,h='<div></div>';
+    MS.forEach(function(m){h+='<div class="h">'+m+'</div>'});h+='<div class="h">MRR</div>';
+    sp.rows.forEach(function(r,ri){
+      var rs=0;
+      h+='<div class="lbl'+(r.hire?' hire':'')+'">'+r.name+(r.hire?' <button data-del="'+ri+'" aria-label="Remove '+r.name+'">✕</button>':'')+'</div>';
+      r.cells.forEach(function(c,mi){rs+=c==='full'?q:(c==='ramp'?q*p:0);
+        h+='<div class="c '+c+'" data-r="'+ri+'" data-m="'+mi+'" role="button" aria-label="'+r.name+' '+MS[mi]+': '+c+'"></div>'});
+      h+='<div class="rowsum">'+k(rs)+'</div>';
+    });
+    h+='<div class="rule"></div>';
+    var inSeat=[],full=[],mrr=[],emptyM=0,fullMonths=0;
+    for(var m=0;m<12;m++){var a=0,f=0,t=0;sp.rows.forEach(function(r){var c=r.cells[m];if(c==='full'||c==='ramp')a++;if(c==='full')f++;if(c==='empty')emptyM++;t+=c==='full'?q:(c==='ramp'?q*p:0)});inSeat.push(a);full.push(f);mrr.push(t);if(f>=seats)fullMonths++}
+    h+='<div class="lbl">In seat</div>'+inSeat.map(function(v){return '<div class="tot">'+v+'</div>'}).join('')+'<div></div>';
+    h+='<div class="lbl">At full quota</div>'+full.map(function(v){return '<div class="tot">'+v+'</div>'}).join('')+'<div></div>';
+    h+='<div class="lbl">New MRR</div>'+mrr.map(function(v){return '<div class="tot" style="font-weight:500">'+k(v)+'</div>'}).join('')+'<div></div>';
+    $('sp').innerHTML=h;
+    var target=seats*q*12,del=mrr.reduce(function(a,b){return a+b},0);
+    $('sp-del').textContent=k(del);$('sp-del-s').textContent=Math.round(del/target*100)+'% of the '+k(target)+' goal';
+    $('sp-lost').textContent=k(target-del);$('sp-lost').style.color='var(--down)';$('sp-lost-s').textContent=Math.round((target-del)/target*100)+'% of target';
+    $('sp-empty').textContent=emptyM;$('sp-empty-s').textContent='= '+k(emptyM*q)+' of new MRR not won';
+    $('sp-fullm').textContent=fullMonths+' of 12';
+    $('sp-hint').textContent=HINT[sp.tool];
+    Array.prototype.forEach.call($('sp').querySelectorAll('[data-del]'),function(b){b.addEventListener('click',function(){sp.rows.splice(+b.getAttribute('data-del'),1);spSave();spRender()})});
+  }
+  function cellAt(x,y){var el=document.elementFromPoint(x,y);return el&&el.classList&&el.classList.contains('c')&&el.closest('#sp')?el:null}
+  function runOf(r,m){var row=sp.rows[r].cells,v=row[m],a=m,b=m;while(a>0&&row[a-1]===v)a--;while(b<11&&row[b+1]===v)b++;return [a,b]}
+  function applyMove(d){
+    var r1=d.r,a=d.a,b=d.b,r2=d.tr,off=d.tm-d.m,src=d.snap;
+    sp.rows=JSON.parse(JSON.stringify(src));
+    if(r2===r1){
+      off=Math.max(-a,Math.min(11-b,off));if(!off)return;
+      var row=src[r1].cells.slice(),run=row.slice(a,b+1);
+      if(off>0){var after=row.slice(b+1,b+1+off);row.splice(a,run.length+after.length,...after.concat(run))}
+      else{var before=row.slice(a+off,a);row.splice(a+off,before.length+run.length,...run.concat(before))}
+      sp.rows[r1].cells=row;
+    } else {
+      off=Math.max(-a,Math.min(11-b,off));
+      for(var i=a;i<=b;i++){var j=i+off;var t=sp.rows[r2].cells[j];sp.rows[r2].cells[j]=src[r1].cells[i];sp.rows[r1].cells[i]=t}
+    }
+  }
+  $('sp').addEventListener('pointerdown',function(e){
+    var el=cellAt(e.clientX,e.clientY);if(!el)return;e.preventDefault();
+    var r=+el.dataset.r,m=+el.dataset.m;
+    if(sp.tool==='move'){var ab=runOf(r,m);sp.drag={r:r,m:m,a:ab[0],b:ab[1],tr:r,tm:m,snap:JSON.parse(JSON.stringify(sp.rows))};
+      Array.prototype.forEach.call($('sp').querySelectorAll('.c[data-r="'+r+'"]'),function(c){var mm=+c.dataset.m;if(mm>=ab[0]&&mm<=ab[1])c.classList.add('pick')})}
+    else{sp.drag={paint:true};sp.rows[r].cells[m]=sp.tool;spRender()}
+  });
+  window.addEventListener('pointermove',function(e){
+    if(!sp.drag)return;var el=cellAt(e.clientX,e.clientY);if(!el)return;var r=+el.dataset.r,m=+el.dataset.m;
+    if(sp.drag.paint){if(sp.rows[r].cells[m]!==sp.tool){sp.rows[r].cells[m]=sp.tool;spRender()}return}
+    if(r===sp.drag.tr&&m===sp.drag.tm)return;sp.drag.tr=r;sp.drag.tm=m;applyMove(sp.drag);spRender();
+    var d=sp.drag,off=d.tm-d.m;Array.prototype.forEach.call($('sp').querySelectorAll('.c[data-r="'+d.tr+'"]'),function(c){var mm=+c.dataset.m-off;if(mm>=d.a&&mm<=d.b)c.classList.add('pick')});
+  });
+  window.addEventListener('pointerup',function(){if(!sp.drag)return;sp.drag=null;spSave();spRender()});
+  Array.prototype.forEach.call(document.querySelectorAll('.tool'),function(b){b.addEventListener('click',function(){
+    sp.tool=b.getAttribute('data-tool');Array.prototype.forEach.call(document.querySelectorAll('.tool'),function(x){x.setAttribute('aria-pressed',x===b)});spRender()})});
+  $('sp-add').addEventListener('click',function(){var n=sp.rows.filter(function(r){return r.hire}).length+1;var c=[];for(var i=0;i<12;i++)c.push('none');sp.rows.push({name:'New hire '+n,hire:true,cells:c});spSave();spRender()});
+  $('sp-reset').addEventListener('click',function(){sp.rows=spBase();spSave();spRender()});
+  function showTab(t){var seats=t==='seats';$('tab-health').hidden=seats;$('tab-seats').hidden=!seats;$('t-health').setAttribute('aria-selected',!seats);$('t-seats').setAttribute('aria-selected',seats);if(seats)spRender();else render();try{history.replaceState(null,'',seats?'#seat-plan':location.pathname+location.search)}catch(e){}}
+  $('t-health').addEventListener('click',function(){showTab('health')});
+  $('t-seats').addEventListener('click',function(){showTab('seats')});
+  if(location.hash==='#seat-plan')showTab('seats');
+
 })();
 </script>
