@@ -207,15 +207,25 @@ tr.dim td{opacity:.35}
       <footer>Data from: Exit records · Leaver type</footer></section>
 
 
-    <section class="r s4"><header><h2>Fix 1 · Truth before tactics</h2><span class="dots" aria-hidden="true">···</span></header>
+    <section class="r s4"><header><h2>Leadership on deals</h2><span class="dots" aria-hidden="true">···</span></header>
       <div class="body"><table class="fx" id="fx-reset"></table></div>
-      <footer>Data from: Pulse survey · team session plan tracker</footer></section>
-    <section class="r s4"><header><h2>Fix 2 · Three layers of support</h2><span class="dots" aria-hidden="true">···</span></header>
+      <footer>Data from: Deals · deal team (manager involved) · open pipeline</footer></section>
+    <section class="r s4"><header><h2>Coaching and enablement</h2><span class="dots" aria-hidden="true">···</span></header>
       <div class="body"><table class="fx" id="fx-train"></table></div>
-      <footer>Data from: Hires · coaching log · ramp milestones · mentor pairings</footer></section>
-    <section class="r s4"><header><h2>Fix 3 · Deal support, by design</h2><span class="dots" aria-hidden="true">···</span></header>
+      <footer>Data from: 1:1 docs · call recordings · onboarding tracker · enablement plan</footer></section>
+    <section class="r s4"><header><h2>Headcount</h2><span class="dots" aria-hidden="true">···</span></header>
       <div class="body"><table class="fx" id="fx-win"></table></div>
-      <footer>Data from: Co-sold deals over $1k MRR · exit records · quota</footer></section>
+      <footer>Data from: Users · recruiting pipeline · bench list</footer></section>
+
+    <section class="r s12"><header><h2>Attrition by tenure and reason</h2><span class="dots" aria-hidden="true">···</span></header>
+      <div class="body"><div class="scroll"><table>
+        <tr><th>Tenure</th><th>Leavers (12 months)</th><th>Top reason</th><th>Fix that targets it</th></tr>
+        <tr><td><b>Months 1–3</b></td><td>2</td><td>Not the job they expected</td><td>Hiring scorecard · onboarding · buddy</td></tr>
+        <tr><td><b>Months 4–5</b></td><td>1</td><td>Behind on ramp, confidence drops</td><td>Weekly 1:1 doc · call reviews · senior AE mentor</td></tr>
+        <tr><td><b>Months 6–9</b></td><td>2</td><td>Poached by a competitor</td><td>Manager on $1k+ deals · bigger deals here</td></tr>
+        <tr><td><b>Month 9+</b></td><td>1</td><td>No clear path upmarket</td><td>Promotion criteria in the open</td></tr>
+      </table></div></div>
+      <footer>Data from: Exit records · tagged by tenure and reason · illustrative</footer></section>
 
     <section class="r s12"><header><h2>Headcount pack · monthly people review</h2><span class="dots" aria-hidden="true">···</span></header>
       <div class="body">
@@ -268,18 +278,19 @@ tr.dim td{opacity:.35}
   var PRESETS={today:{vac:2,leavers:6},play:{vac:1,leavers:3}};
   var MIX={today:[20,50,30],play:[65,25,10]};
   var PLAYS=[
-    {n:1,g:'reset',m:'Team pulse score (out of 10)',v:6.1,t:7.5,dir:'up',u:''},
-    {n:2,g:'reset',m:'Team ideas live, with owners',v:0,t:100,dir:'up',u:'%'},
-    {n:3,g:'train',m:'90-day exits (% of hires)',v:25,t:10,dir:'down',u:'%'},
-    {n:4,g:'train',m:'Ramping reps on track',v:60,t:80,dir:'up',u:'%'},
-    {n:5,g:'train',m:'Coaching log done weekly',v:40,t:100,dir:'up',u:'%'},
-    {n:6,g:'train',m:'New starters with a senior AE mentor',v:0,t:100,dir:'up',u:'%'},
-    {n:7,g:'win',m:'Win rate, $1k+ deals',v:22,t:30,dir:'up',u:'%'},
-    {n:8,g:'win',m:'Leavers who were promoted',v:20,t:60,dir:'up',u:'%'},
-    {n:9,g:'win',m:'Reps at quota',v:43,t:60,dir:'up',u:'%'},
-    {n:10,g:'review',m:'Regrettable exits flagged ahead',v:20,t:80,dir:'up',u:'%'},
-    {n:11,g:'review',m:'Empty months per exit',v:2,t:1,dir:'down',u:''},
-    {n:12,g:'review',m:'Warm bench: ready to start',v:0,t:1,dir:'up',u:''}
+    {n:1,g:'reset',m:'Open $1k+ opps with the manager involved',v:30,t:80,dir:'up',u:'%'},
+    {n:2,g:'reset',m:'Deals over $1k MRR (share of all deals)',v:12,t:25,dir:'up',u:'%'},
+    {n:3,g:'reset',m:'Open pipeline per AE (× monthly quota)',v:1.8,t:3,dir:'up',u:'×'},
+    {n:4,g:'train',m:'1:1 doc updated weekly',v:40,t:100,dir:'up',u:'%'},
+    {n:5,g:'train',m:'Call reviews logged, linked and verified',v:35,t:100,dir:'up',u:'%'},
+    {n:6,g:'train',m:'Onboarding completed',v:70,t:100,dir:'up',u:'%'},
+    {n:7,g:'train',m:'Quarterly enablement plan published (1 = yes)',v:0,t:1,dir:'up',u:''},
+    {n:8,g:'win',m:'AEs in seat vs headcount',v:78,t:100,dir:'up',u:'%'},
+    {n:9,g:'win',m:'Bench, ready to start (target 1–2)',v:0,t:1,dir:'up',u:''},
+    {n:10,g:'win',m:'Talent pipeline: candidates in process',v:2,t:5,dir:'up',u:''},
+    {n:11,g:'review',m:'Leavers tagged by tenure and reason',v:40,t:100,dir:'up',u:'%'},
+    {n:12,g:'review',m:'Regrettable exits flagged ahead',v:20,t:80,dir:'up',u:'%'},
+    {n:13,g:'review',m:'Empty months per exit',v:2,t:1,dir:'down',u:''}
   ];
   var PACK=[
     {ae:'AE 1',r:'London',ten:14,att:'112%',tr:'u',promo:'Ready now',risk:'Low',why:'Promotion-ready',act:'Mentors AE 9; backfill from the bench'},
@@ -292,8 +303,8 @@ tr.dim td{opacity:.35}
     {ae:'AE 8',r:'Remote',ten:12,att:'98%',tr:'f',promo:'Ready in 3 months',risk:'Medium',why:'Waiting on a role',act:'Mentors AE 3 while waiting: builds the mid-market case'},
     {ae:'AE 9',r:'London',ten:1,att:'–',tr:'u',promo:'Ramping',risk:'Low',why:'New starter',act:'Week-one plan with buddy'}
   ];
-  var REGIONS=[{r:'Dublin',track:75,pulse:7.6},{r:'London',track:83,pulse:8.1},{r:'Remote',track:75,pulse:7.4}];
-  var KEY='sbuki-dash-v4';
+  var REGIONS=[{r:'Dublin',track:75},{r:'London',track:83},{r:'Remote',track:75}];
+  var KEY='sbuki-dash-v5';
   var st={cfg:Object.assign({},BRIEF),scenario:'today',region:'all',vals:{},risk:{}};
   try{var saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){st.vals=saved.vals||{};st.risk=saved.risk||{}}}catch(e){}
   function save(){try{localStorage.setItem(KEY,JSON.stringify({vals:st.vals,risk:st.risk}))}catch(e){}}
@@ -379,10 +390,10 @@ tr.dim td{opacity:.35}
     $('mix').innerHTML=h;
   }
   function renderRegions(){
-    var h='<tr><th>Region</th><th>Seats</th><th>New MRR</th><th>On track</th><th>Pulse</th></tr>';
+    var h='<tr><th>Region</th><th>Seats</th><th>New MRR</th><th>On track</th></tr>';
     REGIONS.forEach(function(r){
       var sim=simulate(st.cfg,r.r);
-      h+='<tr class="'+(st.region===r.r?'sel':'')+'"><td><a href="#'+r.r+'" data-r="'+r.r+'">'+r.r+'</a></td><td>'+sim.seats+'</td><td>'+k(sim.del)+' / '+k(sim.target)+'</td><td>'+r.track+'%</td><td>'+r.pulse+'</td></tr>';
+      h+='<tr class="'+(st.region===r.r?'sel':'')+'"><td><a href="#'+r.r+'" data-r="'+r.r+'">'+r.r+'</a></td><td>'+sim.seats+'</td><td>'+k(sim.del)+' / '+k(sim.target)+'</td><td>'+r.track+'%</td></tr>';
     });
     $('regions').innerHTML=h;
     Array.prototype.forEach.call($('regions').querySelectorAll('a[data-r]'),function(a){a.addEventListener('click',function(e){e.preventDefault();st.region=a.getAttribute('data-r');$('region').value=st.region;render()})});
