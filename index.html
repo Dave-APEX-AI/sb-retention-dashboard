@@ -207,15 +207,15 @@ tr.dim td{opacity:.35}
       <footer>Data from: Exit records · Leaver type</footer></section>
 
 
-    <section class="r s4"><header><h2>Fix 1 · The team reset</h2><span class="dots" aria-hidden="true">···</span></header>
+    <section class="r s4"><header><h2>Fix 1 · Truth before tactics</h2><span class="dots" aria-hidden="true">···</span></header>
       <div class="body"><table class="fx" id="fx-reset"></table></div>
-      <footer>Data from: Pulse survey · team plan tracker</footer></section>
-    <section class="r s4"><header><h2>Fix 2 · Recruit and train</h2><span class="dots" aria-hidden="true">···</span></header>
+      <footer>Data from: Pulse survey · team session plan tracker</footer></section>
+    <section class="r s4"><header><h2>Fix 2 · Three layers of support</h2><span class="dots" aria-hidden="true">···</span></header>
       <div class="body"><table class="fx" id="fx-train"></table></div>
-      <footer>Data from: Hires · coaching log · ramp milestones</footer></section>
-    <section class="r s4"><header><h2>Fix 3 · Win together</h2><span class="dots" aria-hidden="true">···</span></header>
+      <footer>Data from: Hires · coaching log · ramp milestones · mentor pairings</footer></section>
+    <section class="r s4"><header><h2>Fix 3 · Deal support, by design</h2><span class="dots" aria-hidden="true">···</span></header>
       <div class="body"><table class="fx" id="fx-win"></table></div>
-      <footer>Data from: Deals over $1k MRR · exit records · quota</footer></section>
+      <footer>Data from: Co-sold deals over $1k MRR · exit records · quota</footer></section>
 
     <section class="r s12"><header><h2>Headcount pack · monthly people review</h2><span class="dots" aria-hidden="true">···</span></header>
       <div class="body">
@@ -225,7 +225,7 @@ tr.dim td{opacity:.35}
           <div>
             <table class="fx" id="fx-review"></table>
             <p style="font-size:12px;font-weight:600;color:var(--ink-strong);margin:14px 0 6px">Every month: manager, director, recruitment</p>
-            <ol class="agenda"><li><b>Performance:</b> trailing results and input trends. Calls or pipeline dipping is the first signal</li><li><b>Attrition risk:</b> every AE rated low, medium or high, with the reason</li><li><b>Headcount plan:</b> hire ahead of high risk and promotions; an owner for every action</li></ol>
+            <ol class="agenda"><li><b>Performance:</b> trailing results and input trends. Calls or pipeline dipping is the first signal</li><li><b>Attrition risk:</b> every AE rated low, medium or high, with the reason</li><li><b>Headcount plan:</b> always hiring, one over headcount or a warm bench; hire ahead of high risk and promotions</li></ol>
           </div>
         </div>
       </div>
@@ -273,25 +273,27 @@ tr.dim td{opacity:.35}
     {n:3,g:'train',m:'90-day exits (% of hires)',v:25,t:10,dir:'down',u:'%'},
     {n:4,g:'train',m:'Ramping reps on track',v:60,t:80,dir:'up',u:'%'},
     {n:5,g:'train',m:'Coaching log done weekly',v:40,t:100,dir:'up',u:'%'},
-    {n:6,g:'win',m:'Win rate, $1k+ deals',v:22,t:30,dir:'up',u:'%'},
-    {n:7,g:'win',m:'Leavers who were promoted',v:20,t:60,dir:'up',u:'%'},
-    {n:8,g:'win',m:'Reps at quota',v:43,t:60,dir:'up',u:'%'},
-    {n:9,g:'review',m:'Regrettable exits flagged ahead',v:20,t:80,dir:'up',u:'%'},
-    {n:10,g:'review',m:'Empty months per exit',v:2,t:1,dir:'down',u:''}
+    {n:6,g:'train',m:'New starters with a senior AE mentor',v:0,t:100,dir:'up',u:'%'},
+    {n:7,g:'win',m:'Win rate, $1k+ deals',v:22,t:30,dir:'up',u:'%'},
+    {n:8,g:'win',m:'Leavers who were promoted',v:20,t:60,dir:'up',u:'%'},
+    {n:9,g:'win',m:'Reps at quota',v:43,t:60,dir:'up',u:'%'},
+    {n:10,g:'review',m:'Regrettable exits flagged ahead',v:20,t:80,dir:'up',u:'%'},
+    {n:11,g:'review',m:'Empty months per exit',v:2,t:1,dir:'down',u:''},
+    {n:12,g:'review',m:'Warm bench: ready to start',v:0,t:1,dir:'up',u:''}
   ];
   var PACK=[
-    {ae:'AE 1',r:'London',ten:14,att:'112%',tr:'u',promo:'Ready now',risk:'Low',why:'Promotion-ready',act:'Plan the backfill now'},
+    {ae:'AE 1',r:'London',ten:14,att:'112%',tr:'u',promo:'Ready now',risk:'Low',why:'Promotion-ready',act:'Mentors AE 9; backfill from the bench'},
     {ae:'AE 2',r:'Dublin',ten:7,att:'95%',tr:'d',promo:'6+ months',risk:'High',why:'Signals: competitor interest',act:'Pay benchmark and path talk this week'},
     {ae:'AE 3',r:'London',ten:4,att:'60%',tr:'f',promo:'Ramping',risk:'Medium',why:'Performance: behind ramp',act:'Extra call reviews; manager on deals'},
     {ae:'AE 4',r:'Remote',ten:11,att:'88%',tr:'d',promo:'3–6 months',risk:'Medium',why:'Behaviour: effort dipping',act:'Inputs reset in the next 1:1'},
     {ae:'AE 5',r:'Dublin',ten:2,att:'–',tr:'u',promo:'Ramping',risk:'Low',why:'Ramping well',act:'Keep the buddy cadence'},
-    {ae:'AE 6',r:'London',ten:9,att:'104%',tr:'u',promo:'3–6 months',risk:'Low',why:'On track',act:'Stretch role: pod lead'},
+    {ae:'AE 6',r:'London',ten:9,att:'104%',tr:'u',promo:'3–6 months',risk:'Low',why:'On track',act:'Senior AE: mentors AE 5'},
     {ae:'AE 7',r:'Dublin',ten:5,att:'72%',tr:'d',promo:'Ramping',risk:'Medium',why:'Signals: quiet in 1:1s',act:'Skip-level coffee with director'},
-    {ae:'AE 8',r:'Remote',ten:12,att:'98%',tr:'f',promo:'Ready in 3 months',risk:'Medium',why:'Waiting on a role',act:'Agree timeline with mid-market manager'},
+    {ae:'AE 8',r:'Remote',ten:12,att:'98%',tr:'f',promo:'Ready in 3 months',risk:'Medium',why:'Waiting on a role',act:'Mentors AE 3 while waiting: builds the mid-market case'},
     {ae:'AE 9',r:'London',ten:1,att:'–',tr:'u',promo:'Ramping',risk:'Low',why:'New starter',act:'Week-one plan with buddy'}
   ];
   var REGIONS=[{r:'Dublin',track:75,pulse:7.6},{r:'London',track:83,pulse:8.1},{r:'Remote',track:75,pulse:7.4}];
-  var KEY='sbuki-dash-v3';
+  var KEY='sbuki-dash-v4';
   var st={cfg:Object.assign({},BRIEF),scenario:'today',region:'all',vals:{},risk:{}};
   try{var saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){st.vals=saved.vals||{};st.risk=saved.risk||{}}}catch(e){}
   function save(){try{localStorage.setItem(KEY,JSON.stringify({vals:st.vals,risk:st.risk}))}catch(e){}}
