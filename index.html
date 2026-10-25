@@ -188,8 +188,8 @@ td input[type=checkbox]{width:16px;height:16px}
   </div>
 
   <div class="tabs" role="tablist" aria-label="Dashboard views">
-    <button role="tab" id="t-health" aria-selected="true" aria-controls="tab-health">Team health</button>
-    <button role="tab" id="t-seats" aria-selected="false" aria-controls="tab-seats">Seat plan · year view</button>
+    <button role="tab" id="t-seats" aria-selected="true" aria-controls="tab-seats">Seat plan · year view</button>
+    <button role="tab" id="t-health" aria-selected="false" aria-controls="tab-health">Team health</button>
     <button role="tab" id="t-oneone" aria-selected="false" aria-controls="tab-oneone">1:1 doc</button>
     <button role="tab" id="t-deals" aria-selected="false" aria-controls="tab-deals">Deal review</button>
     <button role="tab" id="t-calls" aria-selected="false" aria-controls="tab-calls">Call reviews</button>
@@ -712,10 +712,10 @@ td input[type=checkbox]{width:16px;height:16px}
     sp.tool=b.getAttribute('data-tool');Array.prototype.forEach.call(document.querySelectorAll('.tool'),function(x){x.setAttribute('aria-pressed',x===b)});spRender()})});
   $('sp-add').addEventListener('click',function(){var n=sp.rows.filter(function(r){return r.hire}).length+1;var c=[];for(var i=0;i<12;i++)c.push('none');sp.rows.push({name:'New hire '+n,hire:true,cells:c});spSave();spRender()});
   $('sp-reset').addEventListener('click',function(){sp.rows=spBase();spSave();spRender()});
-  var TABS=['health','seats','oneone','deals','calls','enable'],HASH={seats:'#seat-plan',oneone:'#one-to-one',deals:'#deal-review',calls:'#call-reviews',enable:'#enablement'};
-  function showTab(t){TABS.forEach(function(x){$('tab-'+x).hidden=x!==t;$('t-'+x).setAttribute('aria-selected',x===t)});if(t==='seats')spRender();else if(t==='health')render();try{history.replaceState(null,'',HASH[t]||location.pathname+location.search)}catch(e){}}
+  var TABS=['seats','health','oneone','deals','calls','enable'],HASH={health:'#team-health',seats:'#seat-plan',oneone:'#one-to-one',deals:'#deal-review',calls:'#call-reviews',enable:'#enablement'};
+  function showTab(t){TABS.forEach(function(x){$('tab-'+x).hidden=x!==t;$('t-'+x).setAttribute('aria-selected',x===t)});if(t==='seats')spRender();else if(t==='health')render();try{history.replaceState(null,'',t==='seats'?location.pathname+location.search:HASH[t])}catch(e){}}
   TABS.forEach(function(x){$('t-'+x).addEventListener('click',function(){showTab(x)})});
-  Object.keys(HASH).forEach(function(k){if(location.hash===HASH[k])showTab(k)});
+  var start='seats';Object.keys(HASH).forEach(function(k){if(location.hash===HASH[k])start=k});showTab(start);
 
   /* ---- Deal review + call log ---- */
   var DEALS=[
