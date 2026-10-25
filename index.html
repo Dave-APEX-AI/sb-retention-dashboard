@@ -207,15 +207,15 @@ tr.dim td{opacity:.35}
       <footer>Data from: Exit records · Leaver type</footer></section>
 
 
-    <section class="r s4"><header><h2>Leadership on deals</h2><span class="dots" aria-hidden="true">···</span></header>
-      <div class="body"><table class="fx" id="fx-reset"></table></div>
-      <footer>Data from: Deals · deal team (manager involved) · open pipeline</footer></section>
-    <section class="r s4"><header><h2>Coaching and enablement</h2><span class="dots" aria-hidden="true">···</span></header>
-      <div class="body"><table class="fx" id="fx-train"></table></div>
-      <footer>Data from: 1:1 docs · call recordings · onboarding tracker · enablement plan</footer></section>
-    <section class="r s4"><header><h2>Headcount</h2><span class="dots" aria-hidden="true">···</span></header>
+    <section class="r s4"><header><h2>1 · Headcount <span class="tag t-stage">Recruit</span></h2><span class="dots" aria-hidden="true">···</span></header>
       <div class="body"><table class="fx" id="fx-win"></table></div>
       <footer>Data from: Users · recruiting pipeline · bench list</footer></section>
+    <section class="r s4"><header><h2>2 · Coaching and enablement <span class="tag t-stage">Train</span></h2><span class="dots" aria-hidden="true">···</span></header>
+      <div class="body"><table class="fx" id="fx-train"></table></div>
+      <footer>Data from: 1:1 docs · call recordings · onboarding tracker · enablement plan</footer></section>
+    <section class="r s4"><header><h2>3 · Leadership on deals <span class="tag t-stage">Retain</span></h2><span class="dots" aria-hidden="true">···</span></header>
+      <div class="body"><table class="fx" id="fx-reset"></table></div>
+      <footer>Data from: Deals · deal team (manager involved) · open pipeline</footer></section>
 
     <section class="r s12"><header><h2>Attrition by tenure and reason</h2><span class="dots" aria-hidden="true">···</span></header>
       <div class="body"><div class="scroll"><table>
@@ -278,16 +278,16 @@ tr.dim td{opacity:.35}
   var PRESETS={today:{vac:2,leavers:6},play:{vac:1,leavers:3}};
   var MIX={today:[20,50,30],play:[65,25,10]};
   var PLAYS=[
-    {n:1,g:'reset',m:'Open $1k+ opps with the manager involved',v:30,t:80,dir:'up',u:'%'},
-    {n:2,g:'reset',m:'Deals over $1k MRR (share of all deals)',v:12,t:25,dir:'up',u:'%'},
+    {n:1,g:'reset',m:'$1k+ opps with the manager involved',v:30,t:80,dir:'up',u:'%'},
+    {n:2,g:'reset',m:'Deals over $1k MRR, share of all',v:12,t:25,dir:'up',u:'%'},
     {n:3,g:'reset',m:'Open pipeline per AE (× monthly quota)',v:1.8,t:3,dir:'up',u:'×'},
     {n:4,g:'train',m:'1:1 doc updated weekly',v:40,t:100,dir:'up',u:'%'},
-    {n:5,g:'train',m:'Call reviews logged, linked and verified',v:35,t:100,dir:'up',u:'%'},
+    {n:5,g:'train',m:'Call reviews logged and verified',v:35,t:100,dir:'up',u:'%'},
     {n:6,g:'train',m:'Onboarding completed',v:70,t:100,dir:'up',u:'%'},
-    {n:7,g:'train',m:'Quarterly enablement plan published (1 = yes)',v:0,t:1,dir:'up',u:''},
+    {n:7,g:'train',m:'Quarterly enablement plan (1 = done)',v:0,t:1,dir:'up',u:''},
     {n:8,g:'win',m:'AEs in seat vs headcount',v:78,t:100,dir:'up',u:'%'},
     {n:9,g:'win',m:'Bench, ready to start (target 1–2)',v:0,t:1,dir:'up',u:''},
-    {n:10,g:'win',m:'Talent pipeline: candidates in process',v:2,t:5,dir:'up',u:''},
+    {n:10,g:'win',m:'Talent pipeline, in process',v:2,t:5,dir:'up',u:''},
     {n:11,g:'review',m:'Leavers tagged by tenure and reason',v:40,t:100,dir:'up',u:'%'},
     {n:12,g:'review',m:'Regrettable exits flagged ahead',v:20,t:80,dir:'up',u:'%'},
     {n:13,g:'review',m:'Empty months per exit',v:2,t:1,dir:'down',u:''}
