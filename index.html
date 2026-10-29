@@ -194,6 +194,7 @@ td input[type=checkbox]{width:16px;height:16px}
     <button role="tab" id="t-deals" aria-selected="false" aria-controls="tab-deals">Deal review</button>
     <button role="tab" id="t-calls" aria-selected="false" aria-controls="tab-calls">Call reviews</button>
     <button role="tab" id="t-enable" aria-selected="false" aria-controls="tab-enable">Enablement plan</button>
+    <button role="tab" id="t-ai" aria-selected="false" aria-controls="tab-ai">AI selling</button>
   </div>
   <div id="tab-health" role="tabpanel" aria-labelledby="t-health">
   <details class="assume" id="assume">
@@ -237,10 +238,10 @@ td input[type=checkbox]{width:16px;height:16px}
       <footer>Data from: Users · recruiting pipeline · bench list</footer></section>
     <section class="r s4"><header><h2>2 · Coaching and enablement <span class="tag t-stage">Train</span></h2><span class="dots" aria-hidden="true">···</span></header>
       <div class="body"><table class="fx" id="fx-train"></table></div>
-      <footer>Data from: 1:1 docs · call recordings · onboarding tracker · enablement plan</footer></section>
+      <footer>Data from: 1:1 docs · call recordings · onboarding tracker · enablement plan · certifications · Breeze usage</footer></section>
     <section class="r s4"><header><h2>3 · Leadership on deals <span class="tag t-stage">Retain</span></h2><span class="dots" aria-hidden="true">···</span></header>
       <div class="body"><table class="fx" id="fx-reset"></table></div>
-      <footer>Data from: Deals · deal team (manager involved) · open pipeline</footer></section>
+      <footer>Data from: Deals · deal team (manager involved) · open pipeline · outcome field</footer></section>
 
     <section class="r s12"><header><h2>Attrition by tenure and reason</h2><span class="dots" aria-hidden="true">···</span></header>
       <div class="body"><div class="scroll"><table>
@@ -357,11 +358,10 @@ td input[type=checkbox]{width:16px;height:16px}
       <section class="r s3"><header><h2>Open pipeline (MRR)</h2></header><div class="body"><div class="kpi">13.4k</div><div class="kpi-sub">≈ 1.8× quota on average</div></div></section>
       <section class="r s3"><header><h2>Open $1k+ opportunities</h2></header><div class="body"><div class="kpi">5</div><div class="kpi-sub">across 4 AEs</div></div></section>
       <section class="r s3"><header><h2>$1k+ opps with the manager involved</h2></header><div class="body"><div class="kpi" id="dl-pct"></div><div class="kpi-sub">target ≥ 80% · tick a row to update</div></div></section>
-      <section class="r s3"><header><h2>Deals over $1k MRR, share of all</h2></header><div class="body"><div class="kpi">12%</div><div class="kpi-sub">target ≥ 25%</div></div></section>
+      <section class="r s3"><header><h2>Opps with a customer outcome logged</h2></header><div class="body"><div class="kpi">3 of 8</div><div class="kpi-sub">target: every opp · no outcome, no demo</div></div></section>
       <section class="r s12"><header><h2>Open opportunities</h2><span class="dots" aria-hidden="true">···</span></header>
         <div class="body"><div class="scroll"><table id="dl">
-          <tr><th>Opportunity</th><th>AE</th><th>MRR</th><th>Stage</th><th>Score</th><th>Next step</th><th>Close</th><th>Manager involved</th><th>Risk</th></tr>
-        </table></div></div>
+          </table></div></div>
         <footer>Data from: Deals · propensity score (size, fit, intent, buying group) · deal team · illustrative</footer></section>
       <section class="r s6"><header><h2>Deal of the week: Kestrel Logistics</h2></header>
         <div class="body">
@@ -380,6 +380,7 @@ td input[type=checkbox]{width:16px;height:16px}
       <section class="r s6"><header><h2>Qualification check: Kestrel Logistics</h2></header>
         <div class="body"><div class="areas">
           <span>Pain identified and quantified</span><span class="tag t-good">Yes</span>
+          <span>Customer outcome agreed</span><span class="tag t-good">Same-day quotes</span>
           <span>Champion</span><span class="tag t-good">Ops director</span>
           <span>Decision process mapped</span><span class="tag t-good">Yes</span>
           <span>Timeline</span><span class="tag t-good">Go-live January</span>
@@ -393,30 +394,32 @@ td input[type=checkbox]{width:16px;height:16px}
 
   <div id="tab-calls" role="tabpanel" aria-labelledby="t-calls" hidden>
     <div class="grid">
-      <section class="r s4"><header><h2>Calls reviewed this week</h2></header><div class="body"><div class="kpi">11 of 18</div><div class="kpi-sub">target: 2 per AE a week</div></div></section>
-      <section class="r s4"><header><h2>Reviews logged and verified</h2></header><div class="body"><div class="kpi">9 of 11</div><div class="kpi-sub">recording linked, feedback written, manager sign-off</div></div></section>
-      <section class="r s4"><header><h2>Average AE talk ratio</h2></header><div class="body"><div class="kpi">54%</div><div class="kpi-sub">aim for under 50% on discovery</div></div></section>
+      <section class="r s3"><header><h2>Calls reviewed this week</h2></header><div class="body"><div class="kpi">11 of 18</div><div class="kpi-sub">target: 2 per AE a week</div></div></section>
+      <section class="r s3"><header><h2>Reviews logged and verified</h2></header><div class="body"><div class="kpi">9 of 11</div><div class="kpi-sub">recording linked, feedback written, manager sign-off</div></div></section>
+      <section class="r s3"><header><h2>Average AE talk ratio</h2></header><div class="body"><div class="kpi">54%</div><div class="kpi-sub">aim for under 50% on discovery</div></div></section>
+      <section class="r s3"><header><h2>Outcome named before the demo</h2></header><div class="body"><div class="kpi">6 of 11</div><div class="kpi-sub">no outcome, no demo · target: every call</div></div></section>
       <section class="r s6"><header><h2>Discovery · AE 3 · Harbour Physio Group</h2><span class="tag t-good">Verified</span></header>
         <div class="body">
           <span class="rec">▶ Recording link (sample) · 28 min · 20 Oct</span>
-          <div class="call-stats"><div><b>62%</b><span>AE talk ratio</span></div><div><b>9</b><span>questions asked</span></div><div><b>2:40</b><span>longest monologue</span></div><div><b>No</b><span>next step booked</span></div></div>
+          <div class="call-stats"><div><b>62%</b><span>AE talk ratio</span></div><div><b>9</b><span>questions asked</span></div><div><b>No</b><span>outcome before demo</span></div><div><b>No</b><span>next step booked</span></div></div>
           <ul class="moments">
             <li><code>03:10</code>Good opener: referenced their new clinic opening</li>
             <li><code>07:45</code>Prospect named the pain: no-shows, ~20 a week</li>
             <li><code>09:30</code>Moved to demo before putting a cost on no-shows</li>
+            <li><code>14:20</code>"We already use ChatGPT for reminders": no answer, moved on</li>
             <li><code>26:50</code>Ended with "I'll send some info over", no date agreed</li>
           </ul>
-          <div class="fb"><b>Keep</b><span>The research-led opener</span><b>Change</b><span>Quantify the pain first: 20 no-shows × average visit value</span><b>Practise</b><span>Closing on a booked next step (peer mock call, Thursday)</span></div>
+          <div class="fb"><b>Keep</b><span>The research-led opener</span><b>Change</b><span>Outcome first: 20 no-shows × visit value, then show the agent filling those slots</span><b>Practise</b><span>The "I already use ChatGPT" answer, and booking the next step (peer mock call, Thursday)</span></div>
         </div>
         <footer>Reviewed by Manager · logged 21 Oct · linked to the AE 3 1:1 doc</footer></section>
       <section class="r s6"><header><h2>Negotiation · AE 6 · Kestrel Logistics</h2><span class="tag t-good">Verified</span></header>
         <div class="body">
           <span class="rec">▶ Recording link (sample) · 34 min · 20 Oct</span>
-          <div class="call-stats"><div><b>41%</b><span>AE talk ratio</span></div><div><b>14</b><span>questions asked</span></div><div><b>1:10</b><span>longest monologue</span></div><div><b>Yes</b><span>finance call, 24 Oct</span></div></div>
+          <div class="call-stats"><div><b>41%</b><span>AE talk ratio</span></div><div><b>14</b><span>questions asked</span></div><div><b>Yes</b><span>outcome before demo</span></div><div><b>Yes</b><span>finance call, 24 Oct</span></div></div>
           <ul class="moments">
-            <li><code>05:20</code>Recapped the agreed pain and success criteria</li>
+            <li><code>05:20</code>Recapped the agreed outcome: same-day quotes, not 3 days</li>
             <li><code>18:40</code>Price objection: "a competitor quoted less"</li>
-            <li><code>19:30</code>Reframed on cost of the current process, didn't discount</li>
+            <li><code>19:30</code>Reframed on the outcome: the agent drafts every quote from their CRM data. Didn't discount</li>
             <li><code>31:15</code>Booked the finance lead for 24 Oct, manager joining</li>
           </ul>
           <div class="fb"><b>Keep</b><span>Holding value instead of discounting at 18:40</span><b>Change</b><span>Bring finance in earlier on $1k+ deals</span><b>Share</b><span>Clip the 18:40 section for the team's objection library</span></div>
@@ -424,13 +427,13 @@ td input[type=checkbox]{width:16px;height:16px}
         <footer>Reviewed by Manager · logged 21 Oct · clip added to enablement</footer></section>
       <section class="r s12"><header><h2>Review log this week</h2></header>
         <div class="body"><div class="scroll"><table id="cl"></table></div></div>
-        <footer>Data from: Call recordings (e.g. Gong) · review log · illustrative</footer></section>
+        <footer>Data from: Call recordings (e.g. Gong) · review log · scored on the call review scorecard · illustrative</footer></section>
     </div>
   </div>
 
   <div id="tab-enable" role="tabpanel" aria-labelledby="t-enable" hidden>
     <div class="grid">
-      <section class="r s4"><header><h2>Q4 enablement plan</h2></header><div class="body"><div class="kpi">4 of 9</div><div class="kpi-sub">sessions complete · 3 in progress · 2 to start</div></div></section>
+      <section class="r s4"><header><h2>Q4 enablement plan</h2></header><div class="body"><div class="kpi">4 of 11</div><div class="kpi-sub">sessions complete · 4 in progress · 3 to start</div></div></section>
       <section class="r s4"><header><h2>Onboarding completed</h2></header><div class="body"><div class="kpi">70%</div><div class="kpi-sub">average across current starters · target 100%</div></div></section>
       <section class="r s4"><header><h2>Next session</h2></header><div class="body"><div class="kpi" style="font-size:22px">Winning vs Pipedrive on price</div><div class="kpi-sub">28 Oct · enablement team</div></div></section>
       <section class="r s8"><header><h2>Q4 plan: built from team performance, competitive and macro signals</h2><span class="dots" aria-hidden="true">···</span></header>
@@ -442,6 +445,8 @@ td input[type=checkbox]{width:16px;height:16px}
           <tr><td><span class="tag t-stage">Performance</span></td><td>Booking the next step</td><td>38% of meetings end with no next step</td><td>Senior AE</td><td>21 Oct</td><td><span class="tag t-good">Complete</span></td></tr>
           <tr><td><span class="tag t-stage">Competitive</span></td><td>Winning vs Pipedrive on price</td><td>Price-led losses in Q3</td><td>Enablement</td><td>28 Oct</td><td><span class="tag t-warn">In progress</span></td></tr>
           <tr><td><span class="tag t-stage">Performance</span></td><td>Multi-threading $1k+ deals</td><td>Win rate on $1k+ deals below target</td><td>Manager</td><td>4 Nov</td><td><span class="tag t-warn">In progress</span></td></tr>
+          <tr><td><span class="tag t-stage">Certification</span></td><td>AI selling certification (Breeze)</td><td>3 of 9 AEs certified</td><td>Each AE</td><td>15 Nov</td><td><span class="tag t-warn">In progress</span></td></tr>
+          <tr><td><span class="tag t-stage">Competitive</span></td><td>"I already use ChatGPT": the answer</td><td>Came up on 4 of 11 reviewed calls</td><td>Senior AE</td><td>6 Nov</td><td><span class="tag t-bad">Not started</span></td></tr>
           <tr><td><span class="tag t-stage">Certification</span></td><td>Sales certification refresh</td><td>6 of 9 AEs current</td><td>Each AE</td><td>30 Nov</td><td><span class="tag t-warn">In progress</span></td></tr>
           <tr><td><span class="tag t-stage">Macro</span></td><td>Budget-tight buyers: ROI on one page</td><td>Longer cycles, more "not now"</td><td>Manager</td><td>11 Nov</td><td><span class="tag t-bad">Not started</span></td></tr>
           <tr><td><span class="tag t-stage">Competitive</span></td><td>Displacing Salesforce Starter</td><td>Rising in late-stage deals</td><td>Senior AE</td><td>18 Nov</td><td><span class="tag t-bad">Not started</span></td></tr>
@@ -454,6 +459,46 @@ td input[type=checkbox]{width:16px;height:16px}
           <b>AE 3</b> · month 4 · 9 of 10 modules<div class="pbar"><i style="width:90%"></i></div>
           <span style="color:var(--muted)">Each starter has a buddy and a senior AE mentor</span>
         </div></section>
+    </div>
+  </div>
+
+  <div id="tab-ai" role="tabpanel" aria-labelledby="t-ai" hidden>
+    <div class="grid">
+      <section class="r s3"><header><h2>AI selling certified</h2></header><div class="body"><div class="kpi">3 of 9</div><div class="kpi-sub">Breeze certification · target: every AE by 15 Nov</div></div></section>
+      <section class="r s3"><header><h2>AEs using Breeze in their own week</h2></header><div class="body"><div class="kpi">4 of 9</div><div class="kpi-sub">prospecting research, call summaries · you can't sell what you don't use</div></div></section>
+      <section class="r s3"><header><h2>Outcome named before the demo</h2></header><div class="body"><div class="kpi">55%</div><div class="kpi-sub">6 of 11 reviewed calls · target: every call</div></div></section>
+      <section class="r s3"><header><h2>Opps with a customer outcome logged</h2></header><div class="body"><div class="kpi">38%</div><div class="kpi-sub">3 of 8 open opps · target: every opp</div></div></section>
+      <section class="r s8"><header><h2>AI readiness by AE</h2><span class="dots" aria-hidden="true">···</span></header>
+        <div class="body"><div class="scroll"><table>
+          <tr><th>AE</th><th>Certified</th><th>Uses Breeze for</th><th>Outcome before demo</th><th>"I already use ChatGPT"</th><th>Coaching focus</th></tr>
+          <tr><td><b>AE 1</b></td><td><span class="tag t-good">Yes</span></td><td>Prospecting, call summaries</td><td>2 of 2</td><td><span class="tag t-good">Handled</span></td><td>Run the team's ChatGPT drill</td></tr>
+          <tr><td><b>AE 2</b></td><td><span class="tag t-bad">No</span></td><td>–</td><td>0 of 1</td><td><span class="tag t-bad">Not yet</span></td><td>Certify by 15 Nov</td></tr>
+          <tr><td><b>AE 3</b></td><td><span class="tag t-warn">In progress</span></td><td>Call summaries</td><td>0 of 2</td><td><span class="tag t-bad">Missed on call</span></td><td>Outcome first: see call review 20 Oct</td></tr>
+          <tr><td><b>AE 4</b></td><td><span class="tag t-bad">No</span></td><td>–</td><td>1 of 1</td><td><span class="tag t-warn">Role-played</span></td><td>Use it for prospecting this week</td></tr>
+          <tr><td><b>AE 5</b></td><td><span class="tag t-warn">In progress</span></td><td>Prospecting</td><td>1 of 2</td><td><span class="tag t-warn">Role-played</span></td><td>Finish certification</td></tr>
+          <tr><td><b>AE 6</b></td><td><span class="tag t-good">Yes</span></td><td>Prospecting, call summaries</td><td>2 of 2</td><td><span class="tag t-good">Handled</span></td><td>Clip the Kestrel call for the library</td></tr>
+          <tr><td><b>AE 7</b></td><td><span class="tag t-bad">No</span></td><td>–</td><td>0 of 1</td><td><span class="tag t-bad">Not yet</span></td><td>Pair with AE 6 on a live call</td></tr>
+          <tr><td><b>AE 8</b></td><td><span class="tag t-good">Yes</span></td><td>–</td><td>–</td><td><span class="tag t-warn">Role-played</span></td><td>Certified, not using it yet: use it in your own week</td></tr>
+          <tr><td><b>AE 9</b></td><td><span class="tag t-warn">In onboarding</span></td><td>–</td><td>–</td><td><span class="tag t-warn">In onboarding</span></td><td>Certification is in week 3 of onboarding</td></tr>
+        </table></div></div>
+        <footer>Data from: certification records · Breeze usage · call review scorecard · illustrative</footer></section>
+      <section class="r s4"><header><h2>The talk track we coach</h2></header>
+        <div class="body"><div class="fb">
+          <b>Open</b><span>Their business result first: missed enquiries, slow quotes, no-shows. Put a number on it</span>
+          <b>Show</b><span>The agent doing that work on their own customer data, not a tour of features</span>
+          <b>Handle</b><span>"I already use ChatGPT": great for advice. Breeze does the work inside your CRM: answers, qualifies, follows up</span>
+          <b>Close</b><span>Write the outcome on the opp. It becomes the success measure after go-live</span>
+        </div></div>
+        <footer>Checked on every call review · practised in peer mock calls</footer></section>
+      <section class="r s12"><header><h2>After go-live: early AI use by new customers</h2><span class="dots" aria-hidden="true">···</span></header>
+        <div class="body"><div class="scroll"><table>
+          <tr><th>Customer</th><th>AE</th><th>Outcome sold</th><th>Agent live by day 14</th><th>Day-30 check</th><th>Signal</th></tr>
+          <tr><td><b>Riverside Vets</b></td><td>AE 1</td><td>Out-of-hours enquiries answered</td><td><span class="tag t-good">Yes</span></td><td>Enquiries answered, tracked weekly</td><td><span class="tag t-good">Healthy: ask for a referral</span></td></tr>
+          <tr><td><b>Fernhill Builders</b></td><td>AE 6</td><td>Leads qualified before callback</td><td><span class="tag t-good">Yes</span></td><td>Leads qualified, tracked weekly</td><td><span class="tag t-good">Healthy</span></td></tr>
+          <tr><td><b>Mill Street Salon</b></td><td>AE 4</td><td>Not logged</td><td><span class="tag t-bad">No</span></td><td>Not set up</td><td><span class="tag t-bad">At risk: CS and AE call this week</span></td></tr>
+          <tr><td><b>Quayside Lettings</b></td><td>AE 5</td><td>Viewing requests booked</td><td><span class="tag t-warn">Partly</span></td><td>Set-up half done</td><td><span class="tag t-warn">Watch: onboarding call booked</span></td></tr>
+        </table></div></div>
+        <footer>Early usage is the retention signal: the outcome sold is the outcome we check · Data from: Deals · product usage · illustrative</footer></section>
     </div>
   </div>
 
@@ -470,10 +515,13 @@ td input[type=checkbox]{width:16px;height:16px}
     {n:1,g:'reset',m:'$1k+ opps with the manager involved',v:40,t:80,dir:'up',u:'%'},
     {n:2,g:'reset',m:'Deals over $1k MRR, share of all',v:12,t:25,dir:'up',u:'%'},
     {n:3,g:'reset',m:'Open pipeline per AE (× monthly quota)',v:1.8,t:3,dir:'up',u:'×'},
+    {n:16,g:'reset',m:'Opps with a customer outcome logged',v:38,t:100,dir:'up',u:'%'},
     {n:4,g:'train',m:'1:1 doc updated weekly',v:40,t:100,dir:'up',u:'%'},
     {n:5,g:'train',m:'Call reviews logged and verified',v:50,t:100,dir:'up',u:'%'},
     {n:6,g:'train',m:'Onboarding completed',v:70,t:100,dir:'up',u:'%'},
     {n:7,g:'train',m:'Q4 enablement sessions complete',v:44,t:100,dir:'up',u:'%'},
+    {n:14,g:'train',m:'AI selling certified (Breeze)',v:33,t:100,dir:'up',u:'%'},
+    {n:15,g:'train',m:'AEs using Breeze in their own week',v:44,t:100,dir:'up',u:'%'},
     {n:8,g:'win',m:'AEs in seat vs headcount',v:78,t:100,dir:'up',u:'%'},
     {n:9,g:'win',m:'Bench, ready to start (target 1–2)',v:0,t:1,dir:'up',u:''},
     {n:10,g:'win',m:'Talent pipeline, in process',v:2,t:5,dir:'up',u:''},
@@ -712,33 +760,33 @@ td input[type=checkbox]{width:16px;height:16px}
     sp.tool=b.getAttribute('data-tool');Array.prototype.forEach.call(document.querySelectorAll('.tool'),function(x){x.setAttribute('aria-pressed',x===b)});spRender()})});
   $('sp-add').addEventListener('click',function(){var n=sp.rows.filter(function(r){return r.hire}).length+1;var c=[];for(var i=0;i<12;i++)c.push('none');sp.rows.push({name:'New hire '+n,hire:true,cells:c});spSave();spRender()});
   $('sp-reset').addEventListener('click',function(){sp.rows=spBase();spSave();spRender()});
-  var TABS=['seats','health','oneone','deals','calls','enable'],HASH={health:'#team-health',seats:'#seat-plan',oneone:'#one-to-one',deals:'#deal-review',calls:'#call-reviews',enable:'#enablement'};
+  var TABS=['seats','health','oneone','deals','calls','enable','ai'],HASH={health:'#team-health',seats:'#seat-plan',oneone:'#one-to-one',deals:'#deal-review',calls:'#call-reviews',enable:'#enablement',ai:'#ai-selling'};
   function showTab(t){TABS.forEach(function(x){$('tab-'+x).hidden=x!==t;$('t-'+x).setAttribute('aria-selected',x===t)});if(t==='seats')spRender();else if(t==='health')render();try{history.replaceState(null,'',t==='seats'?location.pathname+location.search:HASH[t])}catch(e){}}
   TABS.forEach(function(x){$('t-'+x).addEventListener('click',function(){showTab(x)})});
   var start='seats';Object.keys(HASH).forEach(function(k){if(location.hash===HASH[k])start=k});showTab(start);
 
   /* ---- Deal review + call log ---- */
   var DEALS=[
-    {o:'Kestrel Logistics',ae:'AE 6',m:1.4,st:'Proposal',sc:82,nx:'Finance call, 24 Oct',cl:'14 Nov',mg:true,rk:'Finance not engaged'},
-    {o:'Harbour Physio Group',ae:'AE 3',m:1.1,st:'Discovery',sc:68,nx:'Second call, 24 Oct',cl:'28 Nov',mg:true,rk:'No quantified pain yet'},
-    {o:'Brightwell Accountants',ae:'AE 1',m:1.6,st:'Negotiation',sc:88,nx:'Contract review, 23 Oct',cl:'31 Oct',mg:false,rk:'Discount pressure'},
-    {o:'Oakline Property',ae:'AE 4',m:1.2,st:'Demo',sc:61,nx:'Tailored demo, 27 Oct',cl:'5 Dec',mg:false,rk:'Single-threaded'},
-    {o:'Northgate Dental',ae:'AE 1',m:1.0,st:'Discovery',sc:57,nx:'Discovery, 22 Oct',cl:'12 Dec',mg:false,rk:'Early'},
-    {o:'Larkfield Studios',ae:'AE 5',m:0.6,st:'Proposal',sc:70,nx:'Decision call, 23 Oct',cl:'7 Nov',mg:false,rk:'Low'},
-    {o:'Copper Lane Cafés',ae:'AE 2',m:0.45,st:'Demo',sc:52,nx:'Follow-up, 25 Oct',cl:'21 Nov',mg:false,rk:'Gone quiet'},
-    {o:'Tidewater Travel',ae:'AE 7',m:0.8,st:'Discovery',sc:49,nx:'Discovery, 28 Oct',cl:'9 Dec',mg:false,rk:'Early'}
+    {o:'Kestrel Logistics',ae:'AE 6',m:1.4,st:'Proposal',sc:82,nx:'Finance call, 24 Oct',cl:'14 Nov',mg:true,rk:'Finance not engaged',oc:'Same-day quotes, not 3 days'},
+    {o:'Harbour Physio Group',ae:'AE 3',m:1.1,st:'Discovery',sc:68,nx:'Second call, 24 Oct',cl:'28 Nov',mg:true,rk:'No quantified pain yet',oc:''},
+    {o:'Brightwell Accountants',ae:'AE 1',m:1.6,st:'Negotiation',sc:88,nx:'Contract review, 23 Oct',cl:'31 Oct',mg:false,rk:'Discount pressure',oc:'Every enquiry answered within an hour'},
+    {o:'Oakline Property',ae:'AE 4',m:1.2,st:'Demo',sc:61,nx:'Tailored demo, 27 Oct',cl:'5 Dec',mg:false,rk:'Single-threaded',oc:''},
+    {o:'Northgate Dental',ae:'AE 1',m:1.0,st:'Discovery',sc:57,nx:'Discovery, 22 Oct',cl:'12 Dec',mg:false,rk:'Early',oc:''},
+    {o:'Larkfield Studios',ae:'AE 5',m:0.6,st:'Proposal',sc:70,nx:'Decision call, 23 Oct',cl:'7 Nov',mg:false,rk:'Low',oc:'Leads qualified before the call'},
+    {o:'Copper Lane Cafés',ae:'AE 2',m:0.45,st:'Demo',sc:52,nx:'Follow-up, 25 Oct',cl:'21 Nov',mg:false,rk:'Gone quiet',oc:''},
+    {o:'Tidewater Travel',ae:'AE 7',m:0.8,st:'Discovery',sc:49,nx:'Discovery, 28 Oct',cl:'9 Dec',mg:false,rk:'Early',oc:''}
   ];
   function renderDeals(){
-    var h='<tr><th>Opportunity</th><th>AE</th><th>MRR</th><th>Stage</th><th>Score</th><th>Next step</th><th>Close</th><th>Manager involved</th><th>Risk</th></tr>',big=0,on=0;
+    var h='<tr><th>Opportunity</th><th>AE</th><th>MRR</th><th>Stage</th><th>Score</th><th>Customer outcome</th><th>Next step</th><th>Close</th><th>Manager involved</th><th>Risk</th></tr>',big=0,on=0;
     DEALS.forEach(function(d,i){var b=d.m>=1;if(b){big++;if(d.mg)on++}
-      h+='<tr><td><b>'+d.o+'</b>'+(b?' <span class="tag t-stage">$1k+</span>':'')+'</td><td>'+d.ae+'</td><td>'+d.m.toFixed(2).replace(/0$/,'')+'k</td><td>'+d.st+'</td><td>'+d.sc+'</td><td>'+d.nx+'</td><td>'+d.cl+'</td><td>'+(b?'<input type="checkbox" data-d="'+i+'"'+(d.mg?' checked':'')+' aria-label="Manager involved on '+d.o+'">':'<span style="color:var(--muted)">n/a</span>')+'</td><td>'+d.rk+'</td></tr>'});
+      h+='<tr><td><b>'+d.o+'</b>'+(b?' <span class="tag t-stage">$1k+</span>':'')+'</td><td>'+d.ae+'</td><td>'+d.m.toFixed(2).replace(/0$/,'')+'k</td><td>'+d.st+'</td><td>'+d.sc+'</td><td>'+(d.oc?d.oc:'<span class="tag t-bad">Not logged</span>')+'</td><td>'+d.nx+'</td><td>'+d.cl+'</td><td>'+(b?'<input type="checkbox" data-d="'+i+'"'+(d.mg?' checked':'')+' aria-label="Manager involved on '+d.o+'">':'<span style="color:var(--muted)">n/a</span>')+'</td><td>'+d.rk+'</td></tr>'});
     $('dl').innerHTML=h;var p=Math.round(on/big*100);
     $('dl-pct').innerHTML=p+'% <span class="tag '+(p>=80?'t-good':(p>=60?'t-warn':'t-bad'))+'">'+on+' of '+big+'</span>';
     Array.prototype.forEach.call($('dl').querySelectorAll('input[data-d]'),function(c){c.addEventListener('change',function(){DEALS[+c.getAttribute('data-d')].mg=c.checked;renderDeals()})});
   }
-  var CALLS=[['AE 1',2,true,true],['AE 2',1,true,false],['AE 3',2,true,true],['AE 4',1,true,true],['AE 5',2,true,true],['AE 6',2,true,true],['AE 7',1,false,false],['AE 8',0,false,false],['AE 9',0,false,false]];
-  function renderCalls(){var h='<tr><th>AE</th><th>Calls reviewed</th><th>Recording linked</th><th>Feedback verified</th><th>Status</th></tr>';
-    CALLS.forEach(function(c){var ok=c[1]>=2&&c[3];h+='<tr><td><b>'+c[0]+'</b></td><td>'+c[1]+' of 2</td><td>'+(c[2]?'✓':'–')+'</td><td>'+(c[3]?'✓':'–')+'</td><td><span class="tag '+(ok?'t-good':(c[1]?'t-warn':'t-bad'))+'">'+(ok?'Complete':(c[1]?'Partial':'Not started'))+'</span></td></tr>'});
+  var CALLS=[['AE 1',2,true,true,2,2],['AE 2',1,true,false,0,0],['AE 3',2,true,true,0,1],['AE 4',1,true,true,1,0],['AE 5',2,true,true,1,1],['AE 6',2,true,true,2,2],['AE 7',1,false,false,0,0],['AE 8',0,false,false,0,0],['AE 9',0,false,false,0,0]];
+  function renderCalls(){var h='<tr><th>AE</th><th>Calls reviewed</th><th>Recording linked</th><th>Feedback verified</th><th>Outcome before demo</th><th>AI positioned on outcome</th><th>Status</th></tr>';
+    CALLS.forEach(function(c){var ok=c[1]>=2&&c[3];h+='<tr><td><b>'+c[0]+'</b></td><td>'+c[1]+' of 2</td><td>'+(c[2]?'✓':'–')+'</td><td>'+(c[3]?'✓':'–')+'</td><td>'+(c[1]?c[4]+' of '+c[1]:'–')+'</td><td>'+(c[1]?c[5]+' of '+c[1]:'–')+'</td><td><span class="tag '+(ok?'t-good':(c[1]?'t-warn':'t-bad'))+'">'+(ok?'Complete':(c[1]?'Partial':'Not started'))+'</span></td></tr>'});
     $('cl').innerHTML=h}
   renderDeals();renderCalls();
 
